@@ -1,5 +1,8 @@
+from cookiecutter.main import cookiecutter
+
+
 def main():
-    pass
+    cookiecutter('../templates/python.flask', no_input=True)
 
 
 if __name__ == '__main__':

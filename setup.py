@@ -1,6 +1,7 @@
 from __future__ import print_function
 
 import io
+import os
 import os.path
 import re
 from distutils.text_file import TextFile
@@ -39,6 +40,14 @@ def read_version(version_file):
         return result.group(1) if result else '0.0.1'
 
 
+def collect_resource(resource, prefix='.'):
+    resources = []
+    for current_dir, _, files in os.walk(resource):
+        if files:
+            resources.append((os.path.join(prefix, current_dir), [os.path.join(current_dir, f) for f in files]))
+    return resources
+
+
 setup(
     name='recipe',
     version=read_version('recipe/__init__.py'),
@@ -54,6 +63,8 @@ setup(
             'recipe = recipe.main:main'
         ]
     },
+
+    data_files=collect_resource('templates', prefix='recipe'),
     classifiers=[
         'Programming Language :: Python',
         'Development Status :: 3 - Alpha',

@@ -1,1 +1,3 @@
 include README.md CHANGELOG.md LICENSE requirements.txt TODO.md
+recursive-exclude templates *.pyc
+recursive-include templates *
