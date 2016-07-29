@@ -35,7 +35,7 @@
     <customWorkspace>/root/.jenkins/workspace/{{project_slug}}</customWorkspace>
     <builders>
         <hudson.tasks.Shell>
-            <command>chmod +x ci_analysis.sh &amp;&amp; ./ci_analysis.sh</command>
+            <command>chmod +x ci/analysis.sh &amp;&amp; ./ci/analysis.sh</command>
         </hudson.tasks.Shell>
     </builders>
     <publishers>

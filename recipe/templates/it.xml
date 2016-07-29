@@ -1,62 +1,62 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <project>
-  <actions/>
-  <description></description>
-  <keepDependencies>false</keepDependencies>
-  <properties/>
-  <scm class="hudson.scm.NullSCM"/>
-  <canRoam>true</canRoam>
-  <disabled>false</disabled>
-  <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
-  <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
-  <triggers/>
-  <concurrentBuild>false</concurrentBuild>
-  <customWorkspace>/root/.jenkins/workspace/{{project_slug}}</customWorkspace>
-  <builders>
-    <hudson.tasks.Shell>
-      <command>echo IT</command>
-    </hudson.tasks.Shell>
-  </builders>
-  <publishers>
-    <hudson.tasks.BuildTrigger>
-      <childProjects>Deploy_{{project_slug}}</childProjects>
-      <threshold>
-        <name>SUCCESS</name>
-        <ordinal>0</ordinal>
-        <color>BLUE</color>
-        <completeBuild>true</completeBuild>
-      </threshold>
-    </hudson.tasks.BuildTrigger>
-    <hudson.plugins.emailext.ExtendedEmailPublisher plugin="email-ext@2.44">
-      <recipientList>$DEFAULT_RECIPIENTS</recipientList>
-      <configuredTriggers>
-        <hudson.plugins.emailext.plugins.trigger.FailureTrigger>
-          <email>
-            <subject>$PROJECT_DEFAULT_SUBJECT</subject>
-            <body>$PROJECT_DEFAULT_CONTENT</body>
-            <recipientProviders>
-              <hudson.plugins.emailext.plugins.recipients.DevelopersRecipientProvider/>
-            </recipientProviders>
+    <actions/>
+    <description></description>
+    <keepDependencies>false</keepDependencies>
+    <properties/>
+    <scm class="hudson.scm.NullSCM"/>
+    <canRoam>true</canRoam>
+    <disabled>false</disabled>
+    <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
+    <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
+    <triggers/>
+    <concurrentBuild>false</concurrentBuild>
+    <customWorkspace>/root/.jenkins/workspace/{{project_slug}}</customWorkspace>
+    <builders>
+        <hudson.tasks.Shell>
+            <command>chmod +x ci/it.sh &amp;&amp; ./ci/it.sh</command>
+        </hudson.tasks.Shell>
+    </builders>
+    <publishers>
+        <hudson.tasks.BuildTrigger>
+            <childProjects>Deploy_{{project_slug}}</childProjects>
+            <threshold>
+                <name>SUCCESS</name>
+                <ordinal>0</ordinal>
+                <color>BLUE</color>
+                <completeBuild>true</completeBuild>
+            </threshold>
+        </hudson.tasks.BuildTrigger>
+        <hudson.plugins.emailext.ExtendedEmailPublisher plugin="email-ext@2.44">
+            <recipientList>$DEFAULT_RECIPIENTS</recipientList>
+            <configuredTriggers>
+                <hudson.plugins.emailext.plugins.trigger.FailureTrigger>
+                    <email>
+                        <subject>$PROJECT_DEFAULT_SUBJECT</subject>
+                        <body>$PROJECT_DEFAULT_CONTENT</body>
+                        <recipientProviders>
+                            <hudson.plugins.emailext.plugins.recipients.DevelopersRecipientProvider/>
+                        </recipientProviders>
+                        <attachmentsPattern></attachmentsPattern>
+                        <attachBuildLog>false</attachBuildLog>
+                        <compressBuildLog>false</compressBuildLog>
+                        <replyTo>$PROJECT_DEFAULT_REPLYTO</replyTo>
+                        <contentType>project</contentType>
+                    </email>
+                </hudson.plugins.emailext.plugins.trigger.FailureTrigger>
+            </configuredTriggers>
+            <contentType>default</contentType>
+            <defaultSubject>$DEFAULT_SUBJECT</defaultSubject>
+            <defaultContent>$DEFAULT_CONTENT</defaultContent>
             <attachmentsPattern></attachmentsPattern>
+            <presendScript>$DEFAULT_PRESEND_SCRIPT</presendScript>
+            <postsendScript>$DEFAULT_POSTSEND_SCRIPT</postsendScript>
             <attachBuildLog>false</attachBuildLog>
             <compressBuildLog>false</compressBuildLog>
-            <replyTo>$PROJECT_DEFAULT_REPLYTO</replyTo>
-            <contentType>project</contentType>
-          </email>
-        </hudson.plugins.emailext.plugins.trigger.FailureTrigger>
-      </configuredTriggers>
-      <contentType>default</contentType>
-      <defaultSubject>$DEFAULT_SUBJECT</defaultSubject>
-      <defaultContent>$DEFAULT_CONTENT</defaultContent>
-      <attachmentsPattern></attachmentsPattern>
-      <presendScript>$DEFAULT_PRESEND_SCRIPT</presendScript>
-      <postsendScript>$DEFAULT_POSTSEND_SCRIPT</postsendScript>
-      <attachBuildLog>false</attachBuildLog>
-      <compressBuildLog>false</compressBuildLog>
-      <replyTo>$DEFAULT_REPLYTO</replyTo>
-      <saveOutput>false</saveOutput>
-      <disabled>false</disabled>
-    </hudson.plugins.emailext.ExtendedEmailPublisher>
-  </publishers>
-  <buildWrappers/>
+            <replyTo>$DEFAULT_REPLYTO</replyTo>
+            <saveOutput>false</saveOutput>
+            <disabled>false</disabled>
+        </hudson.plugins.emailext.ExtendedEmailPublisher>
+    </publishers>
+    <buildWrappers/>
 </project>
