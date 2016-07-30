@@ -1,7 +1,7 @@
 import logging
 import os.path
 
-from jenkins import Jenkins
+# from jenkins import Jenkins
 from jinja2 import Environment
 from jinja2 import FileSystemLoader
 
