@@ -7,8 +7,7 @@ from recipe.utils import config_logging
 
 class Command(object):
     name = None
-    usage = None
-    cmds = {}
+    SNAP = {}
     parser = argparse.ArgumentParser(description='recipe')
 
     def __init__(self, options):
@@ -21,13 +20,14 @@ class Command(object):
     def register(cmd_class=None):
         if cmd_class is None:
             parser = Command.parser = argparse.ArgumentParser(description='recipe')
-            parser.add_argument('--verbose', '-v', action='count', default=1)
-            parser.add_argument('--log', dest='log', default=None)
-            Command.sub_parser = parser.add_subparsers(help='sub-command help', dest='command')
+            parser.add_argument('--verbose', '-v', action='count', default=1,
+                                help='Give more output, Options is additive, and can be used up to 3 times.')
+            parser.add_argument('--log', dest='log', default=None, help='Path to a verbose appending log')
+            Command.sub_parser = parser.add_subparsers(help='Available commands', dest='command')
         else:
-            if cmd_class.name not in Command.cmds:
+            if cmd_class.name not in Command.SNAP:
                 cmd_class.register(Command.sub_parser)
-                Command.cmds[cmd_class.name] = cmd_class
+                Command.SNAP[cmd_class.name] = cmd_class
 
     @staticmethod
     def parse(args=None):
@@ -36,8 +36,8 @@ class Command(object):
         parser = Command.parser
         options = parser.parse_args(args)
         cmd = options.command
-        if cmd in Command.cmds:
-            return Command.cmds[cmd](options)
+        if cmd in Command.SNAP:
+            return Command.SNAP[cmd](options)
 
     def run(self):
-        pass
+        raise NotImplementedError

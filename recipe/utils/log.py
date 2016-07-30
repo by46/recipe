@@ -36,6 +36,9 @@ def config_logging(options):
         'formatters': {
             'line': {
                 'format': '%(message)s'
+            },
+            'verbose': {
+                'format': '%(asctime)s - %(levelname)s - %(message)s'
             }
         },
         'handlers': {
@@ -57,7 +60,7 @@ def config_logging(options):
                 "class": "pip.utils.logging.BetterRotatingFileHandler",
                 "filename": options.log,
                 "delay": True,
-                "formatter": "line",
+                "formatter": "verbose",
             },
         },
         'loggers': {
