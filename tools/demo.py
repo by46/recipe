@@ -2,6 +2,7 @@ import sys
 import argparse
 
 if __name__ == '__main__':
+    print __file__
     parser = argparse.ArgumentParser(prog='recipe')
     parser.add_argument('--foo', action='store_true', help='foo help')
     subparsers = parser.add_subparsers(help='sub-command help', dest='command')
