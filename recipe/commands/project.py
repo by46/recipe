@@ -6,12 +6,12 @@ import tempfile
 from cookiecutter.exceptions import OutputDirExistsException
 from cookiecutter.main import cookiecutter
 
-from recipe.ci import create_jenkins_jobs
 from recipe.commands import Command
+from recipe.utils import create_jenkins_jobs
+from recipe.utils import gen_cookie_cutter_meta_json
 from recipe.utils import get_templates_home
 from recipe.utils import load_project_template
 from recipe.utils import valid_project_slug
-from recipe.utils import gen_cookie_cutter_meta_json
 
 
 class ProjectCommand(Command):
@@ -67,4 +67,3 @@ class ProjectCommand(Command):
         except Exception as e:
             self.logger.exception(e)
             sys.exit(3)
-
