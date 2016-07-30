@@ -1,5 +1,6 @@
 from recipe.commands import Command
 import recipe
+from recipe.utils import package_dir
 
 
 class VersionCommand(Command):
@@ -13,4 +14,6 @@ class VersionCommand(Command):
         parser = sub_parser.add_parser('version', help='version help')
 
     def run(self):
-        print (recipe.__version__)
+        print (('package_name:' + 'recipe'),
+               ('recipe_version:' + recipe.__version__),
+               ('from:' + package_dir()))
