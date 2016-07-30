@@ -1,3 +1,5 @@
 cookiecutter
 jinja2
 python-jenkins
+colorama
+six

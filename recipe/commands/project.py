@@ -40,14 +40,12 @@ class ProjectCommand(Command):
                 'Project name is invalid, just contain alpha, digit, underscore(_), and max length is 50.')
 
         templates_home = get_templates_home()
-        if templates_home is None:
-            self.logger.critical('Checking project templates does not exists')
 
         self.logger.info('Loading project templates from %s', templates_home)
         templates = load_project_template(templates_home)
 
         if args.template not in templates:
-            self.logger.error('%s does not exists', args.template)
+            self.logger.error('Project template %s does not exists', args.template)
             sys.exit(1)
 
         temp_work_dir = tempfile.mkdtemp(prefix='recipe-{0}-'.format(project_slug))

@@ -22,6 +22,7 @@ class Command(object):
         if cmd_class is None:
             parser = Command.parser = argparse.ArgumentParser(description='recipe')
             parser.add_argument('--verbose', '-v', action='count', default=1)
+            parser.add_argument('--log', dest='log', default=None)
             Command.sub_parser = parser.add_subparsers(help='sub-command help', dest='command')
         else:
             if cmd_class.name not in Command.cmds:
