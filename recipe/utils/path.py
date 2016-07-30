@@ -9,3 +9,7 @@ def ensure_dir(path):
     except OSError as e:
         if e.errno != errno.EEXIST:
             raise
+
+
+def package_dir():
+    return os.path.dirname(os.path.dirname(os.path.dirname(__file__)))
