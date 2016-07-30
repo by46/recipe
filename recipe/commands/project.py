@@ -6,12 +6,12 @@ import tempfile
 from cookiecutter.exceptions import OutputDirExistsException
 from cookiecutter.main import cookiecutter
 
-from ci import create_jenkins_jobs
+from recipe.ci import create_jenkins_jobs
 from recipe.commands import Command
-from template import gen_cookie_cutter_meta_json
-from template import load_project_template
-from utils import get_templates_home
-from utils import valid_project_slug
+from recipe.template import gen_cookie_cutter_meta_json
+from recipe.template import load_project_template
+from recipe.utils import get_templates_home
+from recipe.utils import valid_project_slug
 
 
 class ProjectCommand(Command):

@@ -6,10 +6,6 @@ import sys
 _RE_PROJECT_NAME = re.compile('^[A-Za-z0-9_\-]{1,50}$', re.MULTILINE)
 
 
-def get_package_name():
-    return os.path.basename(os.path.dirname(__file__))
-
-
 def config_logging(options):
     if options.verbose == 2:
         level = 'INFO'
