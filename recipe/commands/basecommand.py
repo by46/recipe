@@ -20,7 +20,6 @@ class Command(object):
     def register(cmd_class=None):
         if cmd_class is None:
             parser = Command.parser = argparse.ArgumentParser(description='recipe')
-            parser.print_help()
             parser.add_argument('--verbose', '-v', action='count', default=1,
                                 help='Give more output, Options is additive, and can be used up to 3 times.')
             parser.add_argument('--log', dest='log', default=None, help='Path to a verbose appending log')

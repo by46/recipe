@@ -22,7 +22,7 @@ def config_logging(options):
         level = 'WARNING'
 
     if not options.log:
-        options.log = os.path.join(os.path.expanduser('~'), 'recipe.log')
+        options.log = os.path.join(os.path.expanduser('~/recipe'), 'recipe.log')
 
     logging.config.dictConfig({
         'version': 1,
