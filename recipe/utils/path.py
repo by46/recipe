@@ -12,4 +12,4 @@ def ensure_dir(path):
 
 
 def package_dir():
-    return os.path.dirname(os.path.dirname(os.path.dirname(__file__)))
+    return os.path.normpath(os.path.join(__file__, '..', '..', '..'))

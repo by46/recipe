@@ -22,16 +22,25 @@ class Env(object):
         return template.render(**context)
 
 
-def create_jenkins_jobs(project_slug, repo=None, jenkins_url=None):
+def create_jenkins_jobs(project_slug, repo=None, jenkins=None):
+    """
+
+    :param project_slug:
+    :param repo:
+    :param jenkins:
+    :return:
+    """
     if repo is None:
         repo = ''
-    if jenkins_url is None:
-        jenkins_url = 'http://scdfis01:8080'
+    if jenkins is None:
+        jenkins = 'http://scdfis01:8080', 'recipe', 'recipe'
+
+    url, user, password = jenkins
 
     project_slug = project_slug.capitalize()
 
-    logger.info('Login in %s', jenkins_url)
-    client = Jenkins(jenkins_url, 'recipe', 'recipe')
+    logger.info('Login in %s', url)
+    client = Jenkins(url, user, password)
 
     env = Env()
     jobs = reversed(['Analysis', 'UT', 'Build', 'IT', 'AT', 'Deploy'])
@@ -49,7 +58,3 @@ def create_jenkins_jobs(project_slug, repo=None, jenkins_url=None):
     logger.info('Create jenkins view %s', project_slug)
     config = env.render('view.xml', context)
     client.create_view(project_slug, config)
-
-
-if __name__ == '__main__':
-    create_jenkins_jobs('Sunny')
