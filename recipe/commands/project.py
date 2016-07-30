@@ -67,3 +67,4 @@ class ProjectCommand(Command):
         except Exception as e:
             self.logger.exception(e)
             sys.exit(3)
+
