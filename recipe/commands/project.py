@@ -8,21 +8,18 @@ from cookiecutter.main import cookiecutter
 
 from recipe.ci import create_jenkins_jobs
 from recipe.commands import Command
-from recipe.template import gen_cookie_cutter_meta_json
-from recipe.template import load_project_template
 from recipe.utils import get_templates_home
+from recipe.utils import load_project_template
 from recipe.utils import valid_project_slug
+from recipe.utils import gen_cookie_cutter_meta_json
 
 
 class ProjectCommand(Command):
     name = 'startproject'
 
-    def __init__(self, options):
-        super(ProjectCommand, self).__init__(options)
-
     @staticmethod
     def register(sub_parser):
-        parser = sub_parser.add_parser('startproject', help='startproject help')
+        parser = sub_parser.add_parser('startproject', help='create project')
         parser.add_argument('-t', '--template', dest='template', default='python.flask', help="project template name")
         parser.add_argument('-o', '--output-dir', dest='out', default='.',
                             help='Where to output the generated project dir into')
@@ -40,14 +37,12 @@ class ProjectCommand(Command):
                 'Project name is invalid, just contain alpha, digit, underscore(_), and max length is 50.')
 
         templates_home = get_templates_home()
-        if templates_home is None:
-            self.logger.critical('Checking project templates does not exists')
 
         self.logger.info('Loading project templates from %s', templates_home)
         templates = load_project_template(templates_home)
 
         if args.template not in templates:
-            self.logger.error('%s does not exists', args.template)
+            self.logger.error('Project template %s does not exists', args.template)
             sys.exit(1)
 
         temp_work_dir = tempfile.mkdtemp(prefix='recipe-{0}-'.format(project_slug))
