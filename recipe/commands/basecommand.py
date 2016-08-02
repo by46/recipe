@@ -2,6 +2,7 @@ import argparse
 import logging
 import sys
 
+from recipe.utils import OptionParser
 from recipe.utils import config_logging
 
 
@@ -13,8 +14,8 @@ class Command(object):
     def __init__(self, options):
         self.options = options
         config_logging(options)
+        self.config = OptionParser()
         self.logger = logging.getLogger('recipe')
-        # TODO(benjamin): init logger
 
     @staticmethod
     def register(cmd_class=None):

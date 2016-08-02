@@ -1,2 +1,4 @@
 [jenkins]
-url=
+url=http://scdfis01:8080
+user=recipe
+password=recipe
