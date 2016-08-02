@@ -15,6 +15,6 @@ class VersionCommand(Command):
         parser = sub_parser.add_parser('version', help='version help')
 
     def run(self):
-        print ('recipe',
-               recipe.__version__,
-               'from:' + package_dir(), sep=' ')
+        print('recipe',
+              recipe.__version__,
+              'from:' + package_dir(), sep=' ')
