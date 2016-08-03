@@ -15,6 +15,9 @@ from recipe.utils import valid_project_slug
 
 
 class ProjectCommand(Command):
+    """create a new template project
+
+    """
     name = 'startproject'
 
     @staticmethod

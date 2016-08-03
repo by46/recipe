@@ -6,6 +6,9 @@ from recipe.utils import package_dir
 
 
 class VersionCommand(Command):
+    """view version information of recipe
+
+    """
     name = "version"
 
     @staticmethod

@@ -9,6 +9,9 @@ logger = logging.getLogger('recipe')
 
 
 class Env(object):
+    """Env
+
+    """
     __env = None
 
     def __init__(self):

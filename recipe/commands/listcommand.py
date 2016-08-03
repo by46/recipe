@@ -10,6 +10,9 @@ from recipe.utils import load_project_template
 
 
 class ListCommand(Command):
+    """view template information
+
+    """
     name = 'list'
 
     @staticmethod

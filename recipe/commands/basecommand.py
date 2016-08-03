@@ -7,6 +7,9 @@ from recipe.utils import config_logging
 
 
 class Command(object):
+    """this is the base class for all commands
+
+    """
     name = None
     SNAP = {}
     parser = argparse.ArgumentParser(description='recipe')
@@ -19,6 +22,11 @@ class Command(object):
 
     @staticmethod
     def register(cmd_class=None):
+        """register the command
+
+        :param cmd_class: `class`:`str`
+        :return:
+        """
         if cmd_class is None:
             parser = Command.parser = argparse.ArgumentParser(description='recipe')
             parser.add_argument('--verbose', '-v', action='count', default=1,
