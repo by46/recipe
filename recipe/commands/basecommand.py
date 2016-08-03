@@ -49,4 +49,8 @@ class Command(object):
             return Command.SNAP[cmd](options)
 
     def run(self):
+        """ run this command
+
+        :return:
+        """
         raise NotImplementedError
