@@ -10,7 +10,7 @@
 
 ## Install
 
-该项目托管在我们的[PYPI私有仓库](https://scmesos06), 所以你可以通过PIP来开速安装， PIP使用细节可以参照[这里](http://confluence.newegg.org/display/DFIS/PIP).
+该项目托管在我们的[PYPI私有仓库](https://scmesos06), 所以你可以通过PIP来快速安装， PIP使用细节可以参照[这里](http://confluence.newegg.org/display/DFIS/PIP).
 
 通过以下命令快速安装recipe：
 ```shell

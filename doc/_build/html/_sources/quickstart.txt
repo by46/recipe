@@ -12,7 +12,7 @@ Prerequisites
 Install
 ----------
 
-该项目托管在我们的PYPI私有仓库, 所以你可以通过PIP来开速安装，
+该项目托管在我们的PYPI私有仓库, 所以你可以通过PIP来快速安装，
 PIP使用细节可以参照 `PIP使用指南
 <http://confluence.newegg.org/display/DFIS/PIP>`_.
 

@@ -27,13 +27,11 @@
     <link rel="next" title="API" href="api.html" />
     <link rel="prev" title="Welcome to recipe’s documentation!" href="index.html" />
    
-  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
   
-  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
 
   </head>
-  <body role="document">
-  
+  <body role="document">  
 
     <div class="document">
       <div class="documentwrapper">
@@ -52,10 +50,10 @@
 </div>
 <div class="section" id="install">
 <h2>Install<a class="headerlink" href="#install" title="Permalink to this headline">¶</a></h2>
-<p>该项目托管在我们的PYPI私有仓库, 所以你可以通过PIP来开速安装，
+<p>该项目托管在我们的PYPI私有仓库, 所以你可以通过PIP来快速安装，
 PIP使用细节可以参照 <a class="reference external" href="http://confluence.newegg.org/display/DFIS/PIP">PIP使用指南</a>.</p>
 <p>通过以下命令快速安装recipe：</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span>pip --trusted-host scmesos06 install -i https://scmesos06/simple recipe
+<div class="highlight-python"><div class="highlight"><pre>pip --trusted-host scmesos06 install -i https://scmesos06/simple recipe
 </pre></div>
 </div>
 </div>
@@ -64,14 +62,14 @@ PIP使用细节可以参照 <a class="reference external" href="http://confluenc
 <div class="section" id="id1">
 <h3>查看帮助<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
 <p>成功安装Recipe之后，你可以在命令行执行如下命令，获取帮助信息：</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">recipe</span> <span class="o">-</span><span class="n">help</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">recipe</span> <span class="o">-</span><span class="n">help</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="id2">
 <h3>创建项目<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
 <p>你只需要执行如下命令，就可以快速创建项目（默认为python项目）：</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span>recipe startproject &lt;project_name&gt;
+<div class="highlight-python"><div class="highlight"><pre>recipe startproject &lt;project_name&gt;
 </pre></div>
 </div>
 <ul class="simple">
@@ -83,7 +81,7 @@ PIP使用细节可以参照 <a class="reference external" href="http://confluenc
 <li>默认jenkins上创建一系列用于持续相关task</li>
 </ul>
 <p>当然，你也可以选择使用带参数的命令在创建项目时改变一些默认设置：</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span>recipe startproject -t &lt;flask_name&gt; -r &lt;repository_address&gt; &lt;project_name&gt;
+<div class="highlight-python"><div class="highlight"><pre>recipe startproject -t &lt;flask_name&gt; -r &lt;repository_address&gt; &lt;project_name&gt;
 </pre></div>
 </div>
 <ul class="simple">
@@ -94,7 +92,7 @@ PIP使用细节可以参照 <a class="reference external" href="http://confluenc
 <div class="section" id="id3">
 <h3>查看模板<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
 <p>你可以通过 list参数来查看所有的模板：</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span>recipe list
+<div class="highlight-python"><div class="highlight"><pre>recipe list
 </pre></div>
 </div>
 </div>
@@ -159,7 +157,7 @@ PIP使用细节可以参照 <a class="reference external" href="http://confluenc
       
       |
       Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.1</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.8</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.6</a>
       
       |
       <a href="_sources/quickstart.txt"
