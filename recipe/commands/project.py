@@ -7,7 +7,6 @@ from cookiecutter.exceptions import OutputDirExistsException
 from cookiecutter.main import cookiecutter
 
 from recipe.commands import Command
-from recipe.utils import create_jenkins_jobs
 from recipe.utils import gen_cookie_cutter_meta_json
 from recipe.utils import get_templates_home
 from recipe.utils import load_project_template
@@ -18,11 +17,11 @@ class ProjectCommand(Command):
     """create a new template project
 
     """
-    name = 'startproject'
+    name = 'create'
 
     @staticmethod
     def register(sub_parser):
-        parser = sub_parser.add_parser('startproject', help='create project')
+        parser = sub_parser.add_parser('create', help='Create project')
         parser.add_argument('-t', '--template', dest='template', default='python.flask', help="project template name")
         parser.add_argument('-o', '--output-dir', dest='out', default='.',
                             help='Where to output the generated project dir into')
@@ -60,8 +59,6 @@ class ProjectCommand(Command):
         try:
             gen_cookie_cutter_meta_json(temp_work_dir, project_slug)
             cookiecutter(temp_work_dir, no_input=True, output_dir=args.out)
-
-            create_jenkins_jobs(project_slug, args.repo)
 
         except OutputDirExistsException:
             self.logger.warning("%s directory already exists, please ensure it does not exists. ",

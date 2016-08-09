@@ -17,7 +17,7 @@ class ListCommand(Command):
 
     @staticmethod
     def register(sub_parser):
-        sub_parser.add_parser('list', help='list installed project templates')
+        sub_parser.add_parser('list', help='List installed project templates')
 
     def run(self):
         templates = load_project_template(get_templates_home())

@@ -16,7 +16,8 @@ class Env(object):
 
     def __init__(self):
         if Env.__env is None:
-            template_home = os.path.normpath(os.path.join(__file__, '..', 'templates'))
+            template_home = os.path.normpath(os.path.join(__file__, '..', '..', 'templates'))
+            print template_home
             Env.__env = Environment(loader=FileSystemLoader(template_home))
 
     @staticmethod

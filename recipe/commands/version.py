@@ -13,7 +13,7 @@ class VersionCommand(Command):
 
     @staticmethod
     def register(sub_parser):
-        sub_parser.add_parser('version', help='version help')
+        sub_parser.add_parser('version', help='Show version')
 
     def run(self):
         print('recipe',

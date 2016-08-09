@@ -11,7 +11,7 @@
     <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
     <triggers/>
     <concurrentBuild>false</concurrentBuild>
-    <customWorkspace>/root/.jenkins/workspace/deimos</customWorkspace>
+    <customWorkspace>/root/.jenkins/workspace/{{project_slug}}</customWorkspace>
     <builders>
         <hudson.tasks.Shell>
             <command>chmod +x ci/deploy.sh &amp;&amp; ./ci/deploy.sh</command>

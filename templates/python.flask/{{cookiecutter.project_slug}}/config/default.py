@@ -1,0 +1,1 @@
+LOG="/var/{{cookiecutter.project_slug}}/error.log"
