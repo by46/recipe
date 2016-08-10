@@ -9,7 +9,6 @@
         <userRemoteConfigs>
             <hudson.plugins.git.UserRemoteConfig>
                 <url>{{repo}}</url>
-                <credentialsId>{{credential}}</credentialsId>
             </hudson.plugins.git.UserRemoteConfig>
         </userRemoteConfigs>
         <branches>

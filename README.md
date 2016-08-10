@@ -31,7 +31,7 @@ recipe -h
 
 你只需要执行如下命令，就可以快速创建项目：
 ```shell
-recipe startproject demo
+recipe create demo
 ```
 
 该命令会完成两件事情：
