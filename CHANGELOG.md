@@ -1,3 +1,6 @@
 # Change log
 
-## [Unrelease]
+## [0.0.2]
+### Added
+- Add create, version, list, deploy sub-command
+
