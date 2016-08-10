@@ -18,7 +18,5 @@ pip --trusted-host scmesos06 install -i https://scmesos06/simple recipe
 
 ```
 
-
-
 详细信息请参考[详细文档](http://scmesos06/docs/dfis/recipe/latest/index.html)
 
