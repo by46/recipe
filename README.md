@@ -18,23 +18,5 @@ pip --trusted-host scmesos06 install -i https://scmesos06/simple recipe
 
 ```
 
-## QuickStart
-
-成功安装Recipe之后，你可以在命令行执行如下命令，获取帮助信息：
-
-```shell
-recipe -h
-
-```
-
-### 创建项目
-
-你只需要执行如下命令，就可以快速创建项目：
-```shell
-recipe create demo
-```
-
-该命令会完成两件事情：
- - 默认使用python.flask项目模板，在当前工作目录下生成名为demo的项目
- - 默认jenkins上创建一系列用于持续相关task
+详细信息请参考[详细文档](http://scmesos06/docs/dfis/recipe/latest/index.html)
 
