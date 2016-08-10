@@ -7,6 +7,7 @@ from cookiecutter.exceptions import OutputDirExistsException
 from cookiecutter.main import cookiecutter
 
 from recipe.commands import Command
+from recipe.utils import create_jenkins_jobs
 from recipe.utils import gen_cookie_cutter_meta_json
 from recipe.utils import get_templates_home
 from recipe.utils import load_project_template
@@ -25,11 +26,14 @@ class ProjectCommand(Command):
         parser.add_argument('-t', '--template', dest='template', default='python.flask', help="project template name")
         parser.add_argument('-o', '--output-dir', dest='out', default='.',
                             help='Where to output the generated project dir into')
+        parser.add_argument('-d', '--deploy', dest='deploy', action='store_true',
+                            help='Create CI task on Jenkins.')
         parser.add_argument('-r', '--repo', dest='repo',
                             help='the git repo on trgit2, like: https://trgit2/dfis/recipe.git')
         parser.add_argument('name')
 
     def run(self):
+        self.logger.info("Create project starting...")
         args = self.options
         project_slug = args.name
 
@@ -58,12 +62,53 @@ class ProjectCommand(Command):
 
         try:
             gen_cookie_cutter_meta_json(temp_work_dir, project_slug)
+
             cookiecutter(temp_work_dir, no_input=True, output_dir=args.out)
 
+            self.logger.info('Execute POST script.')
+            output_project = os.path.join(args.out, project_slug)
+            self._post_generate(temp_work_dir, output_project=output_project)
+
+            if self.options.deploy:
+                self.logger.info('Create jenkins CI jobs.')
+                jenkins = self.config.get_tuple('jenkins', 'url', 'user', 'password')
+                create_jenkins_jobs(project_slug, self.options.repo, jenkins=jenkins, template=self.options.template)
+
+            self.logger.info('Create project %s success.', project_slug)
         except OutputDirExistsException:
             self.logger.warning("%s directory already exists, please ensure it does not exists. ",
                                 os.path.join(args.out, project_slug))
+            self.logger.info("Create project %s failure.", project_slug)
             sys.exit(2)
         except Exception as e:
             self.logger.exception(e)
+            self.logger.info("Create project %s failure.", project_slug)
             sys.exit(3)
+
+    def _post_generate(self, temp_work_dir, output_project=None):
+        """ convert CRLF to LF line separator
+
+        Because cookcutter #405 bug
+
+        :param temp_work_dir:
+        :param output_project:
+        :return:
+        """
+        post_path = os.path.join(temp_work_dir, 'POST')
+        output_project = output_project or '.'
+        if not os.path.exists(post_path):
+            self.logger.info("Does not find POST script location %s", post_path)
+            return
+
+        with open(post_path, 'rb') as post:
+            for post_file in post:
+                post_file_path = os.path.normpath(os.path.join(output_project, post_file.strip()))
+                self.logger.info("POST-generate file %s", post_file_path)
+                if not os.path.exists(post_file_path):
+                    self.logger.warning("POST-generate %s does not exists", post_file_path)
+                    continue
+
+                lines = open(post_file_path, 'rb').readlines()
+                # convert CRLF to LF
+                with open(post_file_path, 'wb') as tmp:
+                    tmp.writelines([line.strip() + '\n' for line in lines])

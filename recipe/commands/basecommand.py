@@ -29,7 +29,7 @@ class Command(object):
         """
         if cmd_class is None:
             parser = Command.parser = argparse.ArgumentParser(description='recipe')
-            parser.add_argument('--verbose', '-v', action='count', default=1,
+            parser.add_argument('--verbose', '-v', action='count', default=2,
                                 help='Give more output, Options is additive, and can be used up to 3 times.')
             parser.add_argument('--log', dest='log', default=None, help='Path to a verbose appending log')
             Command.sub_parser = parser.add_subparsers(help='Available commands', dest='command')

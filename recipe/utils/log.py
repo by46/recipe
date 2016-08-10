@@ -65,7 +65,7 @@ def config_logging(options):
         },
         'loggers': {
             'recipe': {
-                'level': 'WARNING' if level in ['INFO', 'ERROR'] else 'DEBUG',
+                'level': 'DEBUG',
                 'handlers': ['console', 'console_errors', 'user_log'],
                 'propagate': False
             }

@@ -1,4 +1,5 @@
 import sys
+import io
 import argparse
 
 if __name__ == '__main__':
@@ -17,3 +18,8 @@ if __name__ == '__main__':
     print(args)
     print sys.argv
     parser.print_help()
+
+    with io.open('d:\\tmp\\build.sh', 'w', encoding='utf-8', newline='') as f:
+        f.write(u'#!/bin/sh\necho hello\n\n')
+
+

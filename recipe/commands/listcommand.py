@@ -27,9 +27,5 @@ class ListCommand(Command):
             readme = os.path.join(value, 'README.md')
             if os.path.isfile(readme):
                 self.logger.debug('Read %s template description in README.md', key)
-                with open(readme, 'rb') as f:
-                    lines = f.readlines()
-                    if len(lines) >= 2:
-                        description = lines[1]
+                description = ''.join(open(readme, 'rb').readlines()[1:2])
             print(key, description, sep='\t\t')
-
