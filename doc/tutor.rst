@@ -20,7 +20,7 @@ PIP使用细节可以参照 `PIP使用指南
 
 ::
 
-  pip --trusted-host scmesos06 install -i https://scmesos06/simple recipe
+  pip --trusted-host scmesos06 install -i http://scmesos06/simple recipe
 
 
 
