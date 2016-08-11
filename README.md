@@ -14,7 +14,7 @@
 
 通过以下命令快速安装recipe：
 ```shell
-pip --trusted-host scmesos06 install -i https://scmesos06/simple recipe
+pip --trusted-host scmesos06 install -i http://scmesos06/simple recipe
 
 ```
 

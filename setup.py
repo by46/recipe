@@ -62,6 +62,7 @@ setup(
         'console_scripts': [
             'recipe = recipe.main:main'
         ]
+
     },
 
     data_files=collect_resource('templates', prefix='recipe'),
