@@ -29,7 +29,7 @@ class ProjectCommand(Command):
         parser.add_argument('-d', '--deploy', dest='deploy', action='store_true',
                             help='Create CI task on Jenkins after create project successfully.')
         parser.add_argument('-r', '--repo', dest='repo',
-                            help='the git repo on trgit2, like: https://trgit2/dfis/recipe.git')
+                            help='the git repo on trgit2, like: http://trgit2/dfis/recipe.git')
         parser.add_argument('name')
 
     def run(self):
