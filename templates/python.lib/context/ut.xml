@@ -27,45 +27,6 @@
                 <completeBuild>true</completeBuild>
             </threshold>
         </hudson.tasks.BuildTrigger>
-        <hudson.plugins.cobertura.CoberturaPublisher plugin="cobertura@1.9.7">
-            <coberturaReportFile>coverage.xml</coberturaReportFile>
-            <onlyStable>true</onlyStable>
-            <failUnhealthy>true</failUnhealthy>
-            <failUnstable>true</failUnstable>
-            <autoUpdateHealth>false</autoUpdateHealth>
-            <autoUpdateStability>false</autoUpdateStability>
-            <zoomCoverageChart>true</zoomCoverageChart>
-            <maxNumberOfBuilds>10</maxNumberOfBuilds>
-            <failNoReports>true</failNoReports>
-            <healthyTarget>
-                <targets class="enum-map" enum-type="hudson.plugins.cobertura.targets.CoverageMetric">
-                    <entry>
-                        <hudson.plugins.cobertura.targets.CoverageMetric>METHOD
-                        </hudson.plugins.cobertura.targets.CoverageMetric>
-                        <int>9000000</int>
-                    </entry>
-                </targets>
-            </healthyTarget>
-            <unhealthyTarget>
-                <targets class="enum-map" enum-type="hudson.plugins.cobertura.targets.CoverageMetric">
-                    <entry>
-                        <hudson.plugins.cobertura.targets.CoverageMetric>METHOD
-                        </hudson.plugins.cobertura.targets.CoverageMetric>
-                        <int>0</int>
-                    </entry>
-                </targets>
-            </unhealthyTarget>
-            <failingTarget>
-                <targets class="enum-map" enum-type="hudson.plugins.cobertura.targets.CoverageMetric">
-                    <entry>
-                        <hudson.plugins.cobertura.targets.CoverageMetric>METHOD
-                        </hudson.plugins.cobertura.targets.CoverageMetric>
-                        <int>8000000</int>
-                    </entry>
-                </targets>
-            </failingTarget>
-            <sourceEncoding>UTF_8</sourceEncoding>
-        </hudson.plugins.cobertura.CoberturaPublisher>
         <hudson.plugins.emailext.ExtendedEmailPublisher plugin="email-ext@2.44">
             <recipientList>$DEFAULT_RECIPIENTS</recipientList>
             <configuredTriggers>

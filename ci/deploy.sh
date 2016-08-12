@@ -1,3 +1,3 @@
 #!/bin/sh
 
-echo deploy
+python setup.py sdist upload -r http://scmesos06/simple
