@@ -17,3 +17,6 @@ if key not in os.environ:
 env = os.environ.get(key)
 app.config.from_object('config.{0}'.format(env.lower()))
 app.config['VERSION'] = __version__
+
+from {{cookiecutter.project_slug}} import views
+__all__ = ['views']

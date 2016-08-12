@@ -77,18 +77,17 @@ def create_jenkins_jobs(project_slug, repo=None, jenkins=None, template=None):
         job_name = '{0}_{1}'.format(job, project_slug)
         if client.job_exists(job_name):
             raise JenkinsJobForbiddenException(job)
-        logger.info('Is Jenkins Job %s exists?True', job_name)
+        logger.info('Is Jenkins Job %s exists?False', job_name)
 
     if client.view_exists(project_slug):
         raise JenkinsViewForbiddenExceptioin(project_slug)
-    logger.info('Is Jenkins View %s exists?True', project_slug)
+    logger.info('Is Jenkins View %s exists?False', project_slug)
 
     for prefix in reversed(env.jenkins_jobs()):
         job_name = '{0}_{1}'.format(prefix, project_slug)
         logger.info("Create Jenkins Job %s", job_name)
         template_name = '{0}.xml'.format(prefix.lower())
         config = env.render(template_name, context)
-        logger.info('Creating jenkins job %s', job_name)
         client.create_job(job_name, config)
 
     logger.info('Create jenkins view %s', project_slug)
