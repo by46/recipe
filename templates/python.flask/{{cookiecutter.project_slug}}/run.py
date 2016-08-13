@@ -19,6 +19,9 @@ if __name__ == '__main__':
 
     handler = RotatingFileHandler(os.path.join(logs, 'error.log'), maxBytes=1024 * 1024 * 10, backupCount=10)
     handler.setLevel(logging.DEBUG)
+    app.logger.addHandler(handler)
+
     app.logger.setLevel(logging.DEBUG)
     app.logger.info('{{cookiecutter.project_slug}} listening %s:%s', app.config['HTTP_HOST'], app.config['HTTP_PORT'])
-    WSGIServer((app.config['HTTP_HOST'], app.config['HTTP_PORT']), application=app).serve_forever()
+    WSGIServer((app.config['HTTP_HOST'], app.config['HTTP_PORT']), application=app,
+               log=app.config['WSGI_LOG']).serve_forever()

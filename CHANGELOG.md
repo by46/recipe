@@ -6,6 +6,7 @@
 - Add release docker image python.flask
 - Add faq and version for python.flask
 - Remove coverage plugin on jenkins
+- Add WSGI log setting in config file in python.flask
 
 ## [0.0.2]
 
