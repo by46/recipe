@@ -7,6 +7,7 @@
 - Add faq and version for python.flask
 - Remove coverage plugin on jenkins
 - Add WSGI log setting in config file in python.flask
+- Add Flask-Log for python.flask
 
 ## [0.0.2]
 
