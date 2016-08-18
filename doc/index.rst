@@ -22,3 +22,4 @@ Contents:
 
    tutor
    guide
+   templates
