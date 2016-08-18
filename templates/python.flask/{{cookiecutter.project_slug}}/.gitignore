@@ -60,4 +60,7 @@ docs/_build/
 # PyBuilder
 target/
 
+# Customer ignore
 .idea
+/logs
+doc/_build/

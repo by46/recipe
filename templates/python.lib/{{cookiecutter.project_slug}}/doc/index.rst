@@ -15,12 +15,7 @@ This part of document is introduce what's is {{cookiecutter.project_slug}} and w
 .. toctree::
    :maxdepth: 2
 
-   tutor.rst
-
-Indices and tables
-==================
-
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
-
+   tutor
+   design
+   guide
+   faqs
