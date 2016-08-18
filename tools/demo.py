@@ -1,25 +1,8 @@
-import sys
-import io
-import argparse
+from jenkins import Jenkins
 
 if __name__ == '__main__':
-    print __file__
-    parser = argparse.ArgumentParser(prog='recipe')
-    parser.add_argument('--foo', action='store_true', help='foo help')
-    subparsers = parser.add_subparsers(help='sub-command help', dest='command')
-    parser_a = subparsers.add_parser('startproject', help='startproject help')
-    parser_a.add_argument('bar', type=int, help='bar help')
-
-    parser_b = subparsers.add_parser('list', help='list help')
-    parser_b.add_argument('bar', type=int, help='bar help')
-    parser_b.add_argument('-f', '--foo', type=int, help='bar help')
-
-    args = parser.parse_args(['--foo', 'list', '12'])
-    print(args)
-    print sys.argv
-    parser.print_help()
-
-    with io.open('d:\\tmp\\build.sh', 'w', encoding='utf-8', newline='') as f:
-        f.write(u'#!/bin/sh\necho hello\n\n')
-
-
+    jenkins = 'http://scdfis01:8080', 'benjamin', '123456'
+    client = Jenkins(*jenkins)
+    client.delete_job('demo')
+    with open('config.xml', 'rb') as f:
+        client.create_job('demo', f.read())
