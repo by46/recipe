@@ -3,6 +3,7 @@
 """
 import os
 
+from flask import Blueprint
 from flask import Flask
 from flask_cors import CORS
 from flask_log import Log

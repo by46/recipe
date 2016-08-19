@@ -1,4 +1,4 @@
-from nasa import app
+from {{cookiecutter.project_slug}} import app
 
 
 class DataAccess(object):

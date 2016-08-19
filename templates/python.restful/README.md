@@ -1,2 +1,2 @@
 # python.flask
-Python Project with flask.
+Python restful project with Flask and Flask-RESTful.
