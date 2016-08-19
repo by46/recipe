@@ -1,0 +1,6 @@
+ci/analysis.sh
+ci/deploy.sh
+ci/ut.sh
+ci/at.sh
+ci/it.sh
+ci/build.sh
