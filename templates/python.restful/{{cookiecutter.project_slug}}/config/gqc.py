@@ -1,4 +1,5 @@
 # gqc environment setting
+HTTP_HOST = ''
 
 # WSGI Settings
 WSGI_LOG = None

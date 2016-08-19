@@ -1,4 +1,4 @@
-HTTP_HOST = ''
+HTTP_HOST = '127.0.0.1'
 HTTP_PORT = 8080
 
 LOG = "/var/{{cookiecutter.project_slug}}"

@@ -1,12 +1,13 @@
 from flask import render_template
 
-from {{cookiecutter.project_slug}} import app
+from {{cookiecutter.project_slug}}.db import DataAccess
+from {{cookiecutter.project_slug}} import bp
 
 
-@app.route("/version", methods=['GET'])
+@bp.route("/version", methods=['GET'])
 def version():
-    return render_template('version.html', version=app.config['VERSION'])
+    return render_template('version.html', version=DataAccess.get_version())
 
-@app.route("/faq.htm")
+@bp.route("/faq.htm")
 def faq():
     return render_template('faq.html')
