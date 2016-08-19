@@ -1,11 +1,12 @@
+from flask import render_template
+
 from {{cookiecutter.project_slug}} import app
-from {{cookiecutter.project_slug}} import __version__
 
 
 @app.route("/version", methods=['GET'])
 def version():
-    return __version__
+    return render_template('version.html', version=app.config['VERSION'])
 
 @app.route("/faq.htm")
 def faq():
-    return "<!--Newegg-->"
+    return render_template('faq.html')

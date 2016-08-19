@@ -8,7 +8,7 @@ from flask_cors import CORS
 from flask_log import Log
 
 __version__ = '0.0.1'
-__author__ = 'benjamin.c.yan'
+__author__ = 'Recipe'
 
 app = Flask(__name__)
 
