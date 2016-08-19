@@ -30,3 +30,12 @@ python.lib
 下面生成名为demo的项目，目录结构如下：
 
 |lib|
+
+python.restful
+--------------------------------
+
+该模板用于生成RESTful api的应用程序，使用Python Flask 和Python Flask-RESTful框架。
+下面生成名为demo的项目，目录结构如下：
+
+|flask|
+

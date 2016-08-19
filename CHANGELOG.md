@@ -1,5 +1,11 @@
 # Change log
 
+## [0.0.6]
+
+### Added
+- Add Python.restful template
+- Add Doc template
+
 ## [0.0.5]
 
 ### Added
