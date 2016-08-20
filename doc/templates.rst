@@ -32,28 +32,23 @@ doc
 
 |doc|
 
-index.rst
-+++++++++++++++++
+- index.rst
 
 文档的入口，里面已经包含了文档目录
 
-tutor.rst
-+++++++++++++++++
+- tutor.rst
 
 该文档你可以书写一些快速入门的教程，帮助开发者快速使用你的程序
 
-guide.rst
-+++++++++++++++++
+- guide.rst
 
 该文档你可以书写接口的详细信息
 
-desgin.rst
-+++++++++++++++++++
+- desgin.rst
 
 该文档你可以包含详细设计文档
 
-faqs.rst
-++++++++++++++++++
+- faqs.rst
 
 该文档可以包含一些常用的问题列表
 
@@ -87,36 +82,30 @@ python.flask
 |flask|
 
 
-demo
-+++++++++++++++++
+- demo
 
 该目录包含项目的主要代码，其中包含 ``db``, ``static``, ``templates``, ``views`` 目录。
 static目录存放项目的静态资源，templates目录存放项目的jinja2模板文件。
 
-config
-++++++++++++++++
+- config
 
 该目录包含项目的配置文件，主要分为default.py, development.py, gqc.py, prd.py，
 分别对应默认配置，开发环境，gqc环境，和PRD环境配置。通过设置环境变量 ``ENV``
 来控制加载配置文件的行为，例如: 设置 ``ENV=prd`` ， 就会加载prd.py的配置
 
-ci
-++++++++++++++++
+- ci
 
 Jenkins对应Job执行的shell脚本。
 
-doc
-++++++++++++++++++
+- doc
 
 项目文档，详细信息请参考 `Archives <http://scmesos06/docs/dfis/archives/>`_ 。
 
-test
-++++++++++++++++++
+- test
 
 项目单元测试目录，存放对应的单元测试脚本。
 
-run.py
-++++++++++++++++++
+- run.py
 
 项目程序入口， 执行 ``python run.py`` 运行程序， 默认情况下会加载development.py的配置，
 你可以通过设置环境变量 ``ENV`` 来控制加载配置的行为，例如运行PRD的配置：
@@ -154,36 +143,30 @@ python.restful
 
 |flask|
 
-demo
-+++++++++++++++++
+- demo
 
 该目录包含项目的主要代码，其中包含 ``db``, ``static``, ``templates``, ``views`` 目录。
 static目录存放项目的静态资源，templates目录存放项目的jinja2模板文件。
 
-config
-++++++++++++++++
+- config
 
 该目录包含项目的配置文件，主要分为default.py, development.py, gqc.py, prd.py，
 分别对应默认配置，开发环境，gqc环境，和PRD环境配置。通过设置环境变量 ``ENV``
 来控制加载配置文件的行为，例如: 设置 ``ENV=prd`` ， 就会加载prd.py的配置
 
-ci
-++++++++++++++++
+- ci
 
 Jenkins对应Job执行的shell脚本。
 
-doc
-++++++++++++++++++
+- doc
 
 项目文档，详细信息请参考 `Archives <http://scmesos06/docs/dfis/archives/>`_ 。
 
-test
-++++++++++++++++++
+- test
 
 项目单元测试目录，存放对应的单元测试脚本。
 
-run.py
-++++++++++++++++++
+- run.py
 
 项目程序入口， 执行 ``python run.py`` 运行程序， 默认情况下会加载development.py的配置，
 你可以通过设置环境变量 ``ENV`` 来控制加载配置的行为，例如运行PRD的配置：
