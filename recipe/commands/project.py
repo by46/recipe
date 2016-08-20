@@ -79,7 +79,7 @@ class ProjectCommand(Command):
         except Exception as e:
             self.logger.exception(e)
             self.logger.info("Create project %s failure.", project_slug)
-            sys.exit(3)
+            raise e
 
     def _post_generate(self, temp_work_dir, output_project=None):
         """ convert CRLF to LF line separator

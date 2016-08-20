@@ -10,9 +10,10 @@ class OptionParser(object):
         if self.files:
             self.config.read(self.files)
 
-    def get(self, section, option):
+    def get(self, section, option, default=None):
         if self.config.has_option(section, option):
             return self.config.get(section, option)
+        return default
 
     def get_group(self, section, *fields):
         if self.config.has_section(section):
@@ -32,9 +33,10 @@ class OptionParser(object):
         if config_file == os.devnull:
             return None
 
+        if os.path.exists('.reciperc'):
+            return '.reciperc'
+
         if os.path.exists(os.path.expanduser('~/.reciperc')):
             return os.path.expanduser('~/.reciperc')
 
-        if os.path.exists('.reciperc'):
-            return '.reciperc'
         return None

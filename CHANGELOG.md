@@ -5,6 +5,12 @@
 ### Added
 - Add Python.restful template
 - Add Doc template
+- Add doc template
+- Send email when occur unknown exception
+
+### Changed
+- Use cookiecutter hooks instead of POST file
+- Refactor templates project name and slug
 
 ## [0.0.5]
 

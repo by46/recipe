@@ -1,9 +1,16 @@
 import argparse
+import getpass
 import logging
+import socket
 import sys
+from datetime import datetime
+
+from simplekit import email
 
 from recipe.utils import OptionParser
 from recipe.utils import config_logging
+
+EMAIL_API = 'http://10.16.75.24:3000/framework/v1/mail'
 
 
 class Command(object):
@@ -18,6 +25,7 @@ class Command(object):
         self.options = options
         config_logging(options)
         self.config = OptionParser()
+        email.settings.URL_EMAIL = self.config.get('email', 'api', EMAIL_API)
         self.logger = logging.getLogger('recipe')
 
     @staticmethod
@@ -54,3 +62,19 @@ class Command(object):
         :return:
         """
         raise NotImplementedError
+
+    def execute(self):
+        try:
+            self.run()
+        except Exception as e:
+            # send email
+            sender = 'Recipe@newegg.com'
+            receiver = self.config.get('email', 'receiver', 'benjamin.c.yan@newegg.com')
+            cc = self.config.get('email', 'cc')
+            subject = "(Info) Recipe Error"
+            body = "Hi, \n Recipe occur unknown error with login {0} on {1} at {2}".format(getpass.getuser(),
+                                                                                           socket.gethostname(),
+                                                                                           datetime.now().strftime(
+                                                                                               '%a %b %d %H:%M:%S %Y'))
+            email.send_email(sender, receiver, subject, body, cc=cc, files=[self.options.log])
+            sys.exit(3)

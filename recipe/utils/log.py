@@ -60,6 +60,8 @@ def config_logging(options):
                 "class": "pip.utils.logging.BetterRotatingFileHandler",
                 "filename": options.log,
                 "delay": True,
+                'maxBytes': 1024 * 1024,
+                'backupCount': 5,
                 "formatter": "verbose",
             },
         },

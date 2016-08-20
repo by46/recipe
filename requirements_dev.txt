@@ -4,3 +4,4 @@ python-jenkins
 colorama
 six
 configparser
+simplekit>=0.0.6

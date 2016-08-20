@@ -5,5 +5,4 @@ password=recipe
 
 [email]
 receiver=benjamin.c.yan@newegg.com
-cc=Jaydon.T.Jin@newegg.com;Edison.W.Zhang@newegg.com
-api=http://10.16.75.24:3000/framework/v1/mail
+cc=Jaydon.T.Jin@newegg.com
