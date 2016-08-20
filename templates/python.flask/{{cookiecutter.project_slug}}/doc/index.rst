@@ -1,5 +1,6 @@
-.. {{cookiecutter.project_slug}} documentation master file, created by
-   sphinx-quickstart on Thu Nov 19 22:49:03 2015.
+..
+   {{cookiecutter.project_slug}} documentation master file, created by
+   Recipe on {% now 'local', '%a %b %d %H:%M:%S %Y' %}.
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 

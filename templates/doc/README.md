@@ -1,2 +1,2 @@
 # doc
-Doc folder used by Archives
+Generate Doc folder used by Archives

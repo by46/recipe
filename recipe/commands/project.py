@@ -65,10 +65,6 @@ class ProjectCommand(Command):
 
             cookiecutter(temp_work_dir, no_input=True, output_dir=args.out)
 
-            self.logger.info('Execute POST script.')
-            output_project = os.path.join(args.out, project_slug)
-            self._post_generate(temp_work_dir, output_project=output_project)
-
             if self.options.deploy:
                 self.logger.info('Create jenkins CI jobs.')
                 jenkins = self.config.get_tuple('jenkins', 'url', 'user', 'password')

@@ -18,7 +18,7 @@ def valid_project_slug(name):
 
 
 def get_templates_home():
-    return [os.path.join(sys.prefix, 'recipe', 'templates'),
+    return ['templates', os.path.join(sys.prefix, 'recipe', 'templates'),
             os.path.join(os.path.expanduser('~/recipe/templates'))]
 
 
@@ -34,9 +34,10 @@ def load_project_template(roots):
             if os.path.isdir(full_path):
                 template_name = os.path.basename(full_path).lower()
                 if template_name in templates:
-                    logger.warning('Project template %s in %s has already exists in %s, We will override it.',
+                    logger.warning('Project template %s in %s has already exists in %s, We will ignore it.',
                                    template_name, root,
                                    templates[template_name])
+                    continue
                 templates[template_name] = full_path
     return templates
 
