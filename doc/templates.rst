@@ -8,7 +8,52 @@ Recipe是根据项目模板来构建项目骨架和Jenkins Job，不同项目模
 doc
 -----------------------------
 
-该模板还未完成
+该模板用于生成项目文档目录，文档内容必须使用	`reStructuredText <http://docutils.sourceforge.net/rst.html>`_
+标记语法书写，你可以参考 `教程 <http://www.jianshu.com/p/1885d5570b37>`_ 。
+
+如果你希望在本机生成文档，你必须安装 `Sphinx <http://www.sphinx-doc.org/en/stable/>`_ ，通过下列命令快速安装：
+
+::
+
+	pip install --trusted-host scmesos06 -i http://scmesos06/simple Sphinx
+
+安装完毕之后，你就可以在切换当前工作目录到doc，并且执行：
+
+::
+
+	make html
+
+就会在doc目录下生成_build文件，通过浏览器浏览doc/_build/html/index.html访问文档。
+
+你也可以通过Archives生成文档， 更多信息请参考 `Archives <http://scmesos06/docs/dfis/archives/>`_ 。
+
+会固定产生doc文件夹，里面会包含多个文件：
+
+index.rst
++++++++++++++++++
+
+文档的入口，里面已经包含了文档目录
+
+tutor.rst
++++++++++++++++++
+
+该文档你可以书写一些快速入门的教程，帮助开发者快速使用你的程序
+
+guide.rst
++++++++++++++++++
+
+该文档你可以书写接口的详细信息
+
+desgin.rst
++++++++++++++++++++
+
+该文档你可以包含详细设计文档
+
+faqs.rst
+++++++++++++++++++
+
+该文档可以包含一些常用的问题列表
+
 
 python.flask
 -----------------------------
