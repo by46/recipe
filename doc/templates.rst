@@ -203,18 +203,18 @@ python.lib
 
 |lib|
 
-demo
-++++++++++++++++++++++
+- demo
 
 项目的主要代码
 
-1. setup.py
+- setup.py
 
 用于发布Python扩展包的安装脚本，该脚本依赖 `setuptools <https://setuptools.readthedocs.io/en/latest/>`_ 。
 一般情况下，安装pip时，就已经安装了setuptools。
 
 
-2. newkit.app
+newkit.app
+--------------------------------------
 
 该模板仍在开发中
 
