@@ -2,6 +2,7 @@ Templates
 =======================
 .. |flask| image:: _static/python.flask.png
 .. |lib| image:: _static/python.lib.png
+.. |doc| image:: _static/doc.png
 
 Recipe是根据项目模板来构建项目骨架和Jenkins Job，不同项目模板应对不同场景使用。
 
@@ -27,7 +28,9 @@ doc
 
 你也可以通过Archives生成文档， 更多信息请参考 `Archives <http://scmesos06/docs/dfis/archives/>`_ 。
 
-会固定产生doc文件夹，里面会包含多个文件：
+该模板会固定产生doc文件夹，并包含多个文件，目录接口如下：
+
+|doc|
 
 index.rst
 +++++++++++++++++
