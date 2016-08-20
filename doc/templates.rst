@@ -196,7 +196,7 @@ run.py
 python.lib
 ------------------------------
 
-该模板用于生成Python Lib的项目，包含Jenkins的CI文件夹，用于测试的test文件夹，用于文档
+该模板用于开发纯Python扩展包，包含Jenkins的CI文件夹，用于测试的test文件夹，用于文档
 的doc文件夹，项目文件，还有一些必要的资源文件.
 
 下面生成名为demo的项目，目录结构如下：
@@ -204,5 +204,20 @@ python.lib
 |lib|
 
 demo
+++++++++++++++++++++++
+
+项目的主要代码
+
+setup.py
+++++++++++++++++++++++
+
+用于发布Python扩展包的安装脚本，该脚本依赖 `setuptools <https://setuptools.readthedocs.io/en/latest/>`_ 。
+一般情况下，安装pip时，就已经安装了setuptools。
+
+
+newkit.app
+--------------------------------------
+
+该模板仍在开发中
 
 
