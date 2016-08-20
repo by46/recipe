@@ -47,6 +47,6 @@ def gen_cookie_cutter_meta_json(home, project_slug):
     with open(json_path, 'rb') as f:
         obj = load(f)
 
-    obj['project_slug'] = project_slug
+    obj['project_name'] = project_slug
     with open(json_path, 'wb') as f:
         dump(obj, f)

@@ -4,8 +4,6 @@
 import gevent.monkey
 gevent.monkey.patch_all()
 
-
-
 from gevent.wsgi import WSGIServer
 
 from {{cookiecutter.project_slug}} import app

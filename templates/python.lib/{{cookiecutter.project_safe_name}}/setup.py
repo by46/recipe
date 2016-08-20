@@ -40,22 +40,15 @@ def read_version(version_file):
 
 
 setup(
-    name='sirius',
-    version=read_version('sirius/__init__.py'),
-    url="http://trgit2/dfis/sirius",
+    name='{{cookiecutter.project_slug}}',
+    version=read_version('{{cookiecutter.project_slug}}/__init__.py'),
     license='The MIT License',
-    description='just a simplesirius',
+    description='demo',
     author='recipe',
     author_email='recipe@newegg.com',
     install_requires=read_dependencies(),
     include_package_data=True,
     packages=find_packages(),
-    entry_points={
-        'console_scripts': [
-            'sirius = sirius.main:main'
-        ]
-    },
-    data_files=[("/etc/python", ['sirius_fabfile.py'])],
     classifiers=[
         'Programming Language :: Python',
         'Development Status :: 3 - Alpha',
