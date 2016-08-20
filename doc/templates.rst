@@ -32,7 +32,7 @@ doc
 
 |doc|
 
-- index.rst
+- **index.rst**
 
 文档的入口，里面已经包含了文档目录
 
