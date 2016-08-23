@@ -2,4 +2,4 @@ gevent
 Flask
 Flask_RESTful
 Flask-Cors
-Flask-Log
+Flask-NegLog
