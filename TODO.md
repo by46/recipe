@@ -4,3 +4,4 @@
 - new version check
 - install dependencies after create project
 - add flask ext template
+- remove context to template

@@ -12,6 +12,9 @@
 - Use cookiecutter hooks instead of POST file
 - Refactor templates project name and slug
 
+### Fixed
+- Add coverage report unit test
+
 ## [0.0.5]
 
 ### Added
