@@ -3,7 +3,16 @@
     <actions/>
     <description></description>
     <keepDependencies>false</keepDependencies>
-    <properties/>
+    <properties>
+        <jenkins.model.BuildDiscarderProperty>
+            <strategy class="hudson.tasks.LogRotator">
+                <daysToKeep>-1</daysToKeep>
+                <numToKeep>10</numToKeep>
+                <artifactDaysToKeep>-1</artifactDaysToKeep>
+                <artifactNumToKeep>-1</artifactNumToKeep>
+            </strategy>
+        </jenkins.model.BuildDiscarderProperty>
+    </properties>
     <scm class="hudson.scm.NullSCM"/>
     <canRoam>true</canRoam>
     <disabled>false</disabled>
@@ -11,7 +20,7 @@
     <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
     <triggers/>
     <concurrentBuild>false</concurrentBuild>
-    <customWorkspace>/root/.jenkins/workspace/{{project_slug}}</customWorkspace>
+    <customWorkspace>/root/.jenkins/workspace/{{project_slug|lower}}</customWorkspace>
     <builders>
         <hudson.tasks.Shell>
             <command>chmod +x ci/deploy.sh &amp;&amp; ./ci/deploy.sh</command>

@@ -1,5 +1,0 @@
-gevent
-Flask
-Flask-Cors
-Flask-Log
-mock
