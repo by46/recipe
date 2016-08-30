@@ -1,5 +1,4 @@
-gevent
 Flask
-Flask_RESTful
-Flask-Cors
 Flask-NegLog
+Flask-RESTful
+Gevent

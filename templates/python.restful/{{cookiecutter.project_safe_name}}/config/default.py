@@ -1,7 +1,11 @@
-HTTP_HOST = '127.0.0.1'
+import os
+
+HTTP_HOST = ''
 HTTP_PORT = 8080
 
-LOG = "/var/{{cookiecutter.project_slug}}"
+SECRET_KEY = "\x02|\x86.\\\xea\xba\x89\xa3\xfc\r%s\x9e\x06\x9d\x01\x9c\x84\xa1b+uC"
+
+DEBUG = False
 
 # WSGI Settings
 WSGI_LOG = 'default'
@@ -14,7 +18,6 @@ LOG_MAX_BYTE = 1024 * 1024 * 10
 LOG_FORMATTER = '%(asctime)s - %(levelname)s - %(message)s'
 LOG_ENABLE_CONSOLE = True
 
-# Flask-CORS Settings
-CORS_ORIGINS = "*"
-CORS_METHODS = "GET,POST,PUT"
-CORS_ALLOW_HEADERS = "*"
+# SQL-Alchemy settings
+SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.normpath(os.path.join(__file__, '..', '..', 'data.sqlite'))
+SQLALCHEMY_COMMIT_ON_TEARDOWN = True

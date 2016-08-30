@@ -1,6 +1,4 @@
-gevent
 Flask
-Flask_RESTful
-Flask-Cors
 Flask-NegLog
-mock
+Gevent
+Mock

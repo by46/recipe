@@ -1,10 +1,6 @@
-# gqc environment setting
-HTTP_HOST = ''
-
-# WSGI Settings
-WSGI_LOG = None
+# GQC environment setting
 
 # Flask-Log Settings
 LOG_LEVEL = 'debug'
-LOG_FILENAME = "/var/{{cookiecutter.project_slug}}/error.log"
+LOG_FILENAME = "/var/demo/error.log"
 LOG_ENABLE_CONSOLE = False

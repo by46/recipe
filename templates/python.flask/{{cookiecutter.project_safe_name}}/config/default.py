@@ -1,10 +1,11 @@
-HTTP_HOST = '127.0.0.1'
+import os
+
+HTTP_HOST = ''
 HTTP_PORT = 8080
 
-LOG = "/var/{{cookiecutter.project_slug}}"
+SECRET_KEY = "\x02|\x86.\\\xea\xba\x89\xa3\xfc\r%s\x9e\x06\x9d\x01\x9c\x84\xa1b+uC"
 
-# WSGI Settings
-WSGI_LOG = 'default'
+DEBUG = False
 
 # Flask-Log Settings
 LOG_LEVEL = 'debug'

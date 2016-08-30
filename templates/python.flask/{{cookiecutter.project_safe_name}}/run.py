@@ -2,14 +2,23 @@
 
 """
 import gevent.monkey
+
 gevent.monkey.patch_all()
 
-from gevent.wsgi import WSGIServer
-
-from {{cookiecutter.project_slug}} import app
-
 if __name__ == '__main__':
-    app.logger.info('{{cookiecutter.project_slug}} listening %s:%s', app.config['HTTP_HOST'], app.config['HTTP_PORT'])
-    
-    WSGIServer((app.config['HTTP_HOST'], app.config['HTTP_PORT']), application=app,
-               log=app.config['WSGI_LOG']).serve_forever()
+    import os
+
+    from gevent.wsgi import WSGIServer
+    from app import create_app
+
+    ENV_NAME = 'ENV'
+
+    app = create_app(os.environ.get(ENV_NAME, 'development'))
+
+    app.logger.info('demo listening %s:%s', app.config['HTTP_HOST'], app.config['HTTP_PORT'])
+
+    if app.config.get('DEBUG', False):
+        app.run(app.config['HTTP_HOST'], app.config['HTTP_PORT'], debug=False)
+    else:
+        WSGIServer((app.config['HTTP_HOST'], app.config['HTTP_PORT']), application=app,
+                   log=None).serve_forever()

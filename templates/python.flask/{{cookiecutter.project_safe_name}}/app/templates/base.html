@@ -1,12 +1,15 @@
+{% raw %}
 <html>
 <head>
-    <title>Welcome to {{ cookiecutter.project_slug }}!</title>
-    {% raw %}
+    <title>Welcome to demo!</title>
     <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}"/>
-    {% endraw %}
 </head>
 <body>
-Hello world
-</body>
-</html>
+{% block content %}
 
+{% endblock %}
+</body>
+{% block scripts %}
+{% endblock %}
+</html>
+{% endraw %}
