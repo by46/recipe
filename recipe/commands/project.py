@@ -71,8 +71,9 @@ class ProjectCommand(Command):
 
             self.logger.info('Create project %s success.', project_slug)
         except OutputDirExistsException:
-            self.logger.warning("%s directory already exists, please ensure it does not exists. ",
-                                os.path.join(args.out, project_slug))
+            self.logger.error(
+                u"Create Project failure : %s directory already exists, please ensure it does not exists. ",
+                os.path.join(args.out, project_slug))
             self.logger.error("Create project %s failure.", project_slug)
             sys.exit(2)
         except Exception as e:
