@@ -5,6 +5,7 @@
 - Fix templates hooks decode error
 - Fix exception log with run log level
 - Fix inaccuracy dependencies
+- Fix ci script error
 
 ## [0.0.6]
 

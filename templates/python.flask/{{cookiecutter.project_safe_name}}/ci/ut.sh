@@ -1,8 +1,10 @@
 #! /bin/sh
 
-COVER=coverage
+COVER=./venv/bin/coverage
 
-${COVER} run --source {{cookiecutter.project_slug}} -m unittest discover --start-directory test --pattern test_*.py
+./venv/bin/activate
+
+${COVER} run --source app -m unittest discover --start-directory test --pattern test_*.py
 
 [ $? -gt 0 ] && exit 1
 
