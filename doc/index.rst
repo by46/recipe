@@ -23,3 +23,4 @@ Contents:
    tutor
    guide
    templates
+   faqs

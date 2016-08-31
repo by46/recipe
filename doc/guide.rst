@@ -63,6 +63,7 @@ deploy命令用于创建Jenkins相关的Job，适用于你的项目已经存在�
 
 - 参数 ``--template`` 指定项目模板，因为不同模板创建的Jenkins Job可能会不一样，默认值为python.flask
 - 参数 ``--repo`` 指定项目的GIT仓库地址
+- 参数 ``name`` 只能包含大写字母，小写字母，数字，连接号(-), 下划线
 
 .. important::
     现在只支持GIT版本管理，并且git仓库必须是public类型的。
