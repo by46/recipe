@@ -1,5 +1,11 @@
 # Change log
 
+## [0.0.7]
+### Fixed
+- Fix templates hooks decode error
+- Fix exception log with run log level
+- Fix inaccuracy dependencies
+
 ## [0.0.6]
 
 ### Added

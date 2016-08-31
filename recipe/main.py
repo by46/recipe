@@ -1,7 +1,9 @@
 from recipe.commands import Command
+from recipe.hack import patch
 
 
 def main():
+    patch()
     cmd = Command.parse()
     cmd.execute()
 

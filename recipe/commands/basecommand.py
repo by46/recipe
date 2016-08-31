@@ -67,6 +67,7 @@ class Command(object):
         try:
             self.run()
         except Exception as e:
+            self.logger.exception(e)
             # send email
             sender = 'Recipe@newegg.com'
             receiver = self.config.get('email', 'receiver', 'benjamin.c.yan@newegg.com')
