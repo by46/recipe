@@ -82,9 +82,9 @@ python.flask
 |flask|
 
 
-- **demo**
+- **app**
 
-该目录包含项目的主要代码，其中包含 ``db``, ``static``, ``templates``, ``views`` 目录。
+该目录包含项目的主要代码，其中包含  ``static``, ``templates``, ``main``, ``models``, ``decorators``目录。
 static目录存放项目的静态资源，templates目录存放项目的jinja2模板文件。
 
 - **config**
@@ -143,10 +143,10 @@ python.restful
 
 |flask|
 
-- **demo**
+- **app**
 
-该目录包含项目的主要代码，其中包含 ``db``, ``static``, ``templates``, ``views`` 目录。
-static目录存放项目的静态资源，templates目录存放项目的jinja2模板文件。
+该目录包含项目的主要代码，其中包含 ``static``, ``templates``, ``main``, ``models``, ``decorators`` 目录。
+static目录存放项目的静态资源，templates目录存放项目的jinja2模板文件, main包含主要的代码。
 
 - **config**
 

@@ -26,5 +26,5 @@ class DeployCommand(Command):
             self.logger.info("Create Jenkins CI job success.")
         except Exception as e:
             self.logger.exception(e)
-            self.logger.info("Create Jenkins CI job failure.")
+            self.logger.error("Create Jenkins CI job failure.")
             raise e

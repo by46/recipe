@@ -33,34 +33,33 @@ class ProjectCommand(Command):
         parser.add_argument('name')
 
     def run(self):
-        self.logger.info("Create project starting...")
-        args = self.options
-        project_slug = args.name
-
-        # check project name
-        if not valid_project_slug(project_slug):
-            self.logger.critical(
-                'Project name is invalid, just contain alpha, digit, underscore(_), and max length is 50.')
-
-        templates_home = get_templates_home()
-
-        self.logger.info('Loading project templates from %s', templates_home)
-        templates = load_project_template(templates_home)
-
-        if args.template not in templates:
-            self.logger.error('Project template %s does not exists', args.template)
-            sys.exit(1)
-
-        temp_work_dir = tempfile.mkdtemp(prefix='recipe-{0}-'.format(project_slug))
-        os.rmdir(temp_work_dir)
-        shutil.copytree(templates[args.template], temp_work_dir)
-        self.logger.info('Copying project templates into %s', temp_work_dir)
-
-        if not os.path.isdir(args.out):
-            self.logger.info('Creating output dir %s', args.out)
-            os.makedirs(args.out)
-
         try:
+            self.logger.info("Create project starting...")
+            args = self.options
+            project_slug = args.name
+
+            # check project name
+            if not valid_project_slug(project_slug):
+                self.logger.critical(
+                    'Project name is invalid, just contain alpha, digit, underscore(_), and max length is 50.')
+
+            templates_home = get_templates_home()
+
+            self.logger.info('Loading project templates from %s', templates_home)
+            templates = load_project_template(templates_home)
+
+            if args.template not in templates:
+                self.logger.error('Project template %s does not exists', args.template)
+                sys.exit(1)
+
+            temp_work_dir = tempfile.mkdtemp(prefix='recipe-{0}-'.format(project_slug))
+            os.rmdir(temp_work_dir)
+            shutil.copytree(templates[args.template], temp_work_dir)
+            self.logger.info('Copying project templates into %s', temp_work_dir)
+
+            if not os.path.isdir(args.out):
+                self.logger.info('Creating output dir %s', args.out)
+                os.makedirs(args.out)
             gen_cookie_cutter_meta_json(temp_work_dir, project_slug)
 
             cookiecutter(temp_work_dir, no_input=True, output_dir=args.out)
@@ -72,13 +71,14 @@ class ProjectCommand(Command):
 
             self.logger.info('Create project %s success.', project_slug)
         except OutputDirExistsException:
-            self.logger.warning("%s directory already exists, please ensure it does not exists. ",
-                                os.path.join(args.out, project_slug))
-            self.logger.info("Create project %s failure.", project_slug)
+            self.logger.error(
+                u"Create Project failure : %s directory already exists, please ensure it does not exists. ",
+                os.path.join(args.out, project_slug))
+            self.logger.error("Create project %s failure.", project_slug)
             sys.exit(2)
         except Exception as e:
             self.logger.exception(e)
-            self.logger.info("Create project %s failure.", project_slug)
+            self.logger.error("Create project %s failure.", project_slug)
             raise e
 
     def _post_generate(self, temp_work_dir, output_project=None):
