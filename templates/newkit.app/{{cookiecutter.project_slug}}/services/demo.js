@@ -8,7 +8,7 @@
                         return deferred.resolve(response.data)
                     }, function errorCallback(response) {
                         return deferred.reject(false)
-                    })
+                    }));
                 return deferred.promise;
             }
 

@@ -70,8 +70,7 @@ def create_jenkins_jobs(project_slug, repo=None, jenkins=None, template=None):
     logger.debug("Loading jenkins from %s", jenkins_context_path)
     env = JenkinsContext(jenkins_context_path)
     context = dict(project_slug=project_slug,
-                   repo=repo,
-                   credential='30ba71ab-eec8-4082-b171-8edecfe076de')
+                   repo=repo)
 
     for job in reversed(env.jenkins_jobs()):
         job_name = '{0}_{1}'.format(job, project_slug)
