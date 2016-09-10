@@ -39,7 +39,7 @@ PIP使用细节可以参照 `PIP使用指南
 
 ::
 
-  recipe create --template python.lib --init-repo demo
+  recipe create --init-repo demo
 
 
 3. 初始化持续集成流程
@@ -49,7 +49,7 @@ PIP使用细节可以参照 `PIP使用指南
 
 ::
 
-  recipe deploy --template python.flask --repo http://trgit2/dfis/demo.git demo
+  recipe deploy --repo http://trgit2/dfis/demo.git demo
 
 
 Jenkins会从http://trgit2/dfis/demo.git的develop分支拉取代码，执行持续集成过程。
