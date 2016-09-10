@@ -3,6 +3,7 @@
 ## [0.0.8]
 ### Added
 - Support for apps cluster
+- Add init-repo to initialize local git repository
 
 ## [0.0.7]
 ### Fixed

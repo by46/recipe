@@ -1,6 +1,7 @@
 import json
 import logging
 import os.path
+import webbrowser
 
 from jenkins import Jenkins
 from jinja2 import Environment
@@ -92,3 +93,6 @@ def create_jenkins_jobs(project_slug, repo=None, jenkins=None, template=None):
     logger.info('Create jenkins view %s', project_slug)
     config = env.render('view.xml', context)
     client.create_view(project_slug, config)
+
+    view_url = '{0}/view/{1}'.format(url, project_slug)
+    webbrowser.open(view_url)
