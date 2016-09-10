@@ -58,7 +58,10 @@ Jenkins会从http://trgit2/dfis/demo.git的develop分支拉取代码，执行持
 4. GIT 设置
 ++++++++++++++
 
-由于Application项目目录已经创建好，所以 ``git clone`` 已经不再适用，所以你可以参照下面命令设置git仓库：
+在我们生成Application时，已经初始化好了本地GIT仓库，并且已经为你预先创建了master， develop， feature-doc(用于书写项目文档)三个分支，
+所以只需要简单的设置远端GIT仓库地址，并同步master， develop，feature-doc分支代码到trgit2。
+
+所以你可以参照下面命令设置git仓库：
 
 ::
 
@@ -69,9 +72,6 @@ Jenkins会从http://trgit2/dfis/demo.git的develop分支拉取代码，执行持
 
 .. attention::
 	禁用autocrlf非常重要， 因为我们项目中包含了用于持续集成过程的shell脚本， ``LF`` 不能被替换成 ``CRLF``。
-
-	在我们生成Application时，已经初始化好了本地GIT仓库，并且已经为你预先创建了master， develop， feature-doc(用于书写项目文档)三个分支，
-	所以只需要简单的设置远端GIT仓库地址，并同步master， develop，feature-doc分支代码到trgit2。
 
 	Application第一次初始化时，会比较耗时，可能需要等待5-10分钟，请你耐性等待。
 
