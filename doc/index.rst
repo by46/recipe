@@ -24,3 +24,4 @@ Contents:
    guide
    templates
    faqs
+   misc
