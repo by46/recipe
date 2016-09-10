@@ -27,7 +27,7 @@ Create Project
 
 - 参数 ``--template`` 用于指定项目模板， 默认值为python.flask
 - 参数 ``--output-dir`` 用于指定项目输出的路径，默认情况下，会当前工作目录生成项目骨架
-- 参数 ``--init-repo`` 用于初始化本地GIT仓库，并预先创建master，develop和feature-doc分支
+- 参数 ``--init-repo`` 用于指定是否初始化本地GIT仓库，并预先创建master，develop和feature-doc分支
 - 参数 ``--deploy`` 用于指定创建完项目骨架之后，在jenkins上创建相关Job， 默认情况下，会创建以下jenkins job：
 
 	+ Analysis_<name>
