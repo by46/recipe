@@ -58,7 +58,7 @@ Jenkins会从http://trgit2/dfis/demo.git的develop分支拉取代码，执行持
 4. GIT 设置
 ++++++++++++++
 
-在我们生成Application时，已经初始化好了本地GIT仓库，并且已经为你预先创建了master， develop， feature-doc(用于书写项目文档)三个分支，
+在生成Application时，Recipe已经创建了本地GIT仓库，并且已经为你预先创建了master， develop， feature-doc(用于书写项目文档)三个分支，
 所以只需要简单的设置远端GIT仓库地址，并同步master， develop，feature-doc分支代码到trgit2。
 
 所以你可以参照下面命令设置git仓库：
