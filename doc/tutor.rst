@@ -93,5 +93,5 @@ http://S1QDFIS02/demo/version
 
 
 .. attention::
-	如果你的项目名称中带有连接号(-) , 我们会把替换为下划线(_)，例如项目名为dfis-mq-distributor
+	如果你的项目名称中带有 :code:`连接号(-)` , 我们会把替换为下划线(_)，例如项目名为dfis-mq-distributor
 	那么服务地址为： http://SCMESOS02/dfis_mq_distributor/version.
