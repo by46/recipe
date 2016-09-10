@@ -37,7 +37,7 @@ Create Project
 	+ IT_<name>
 	+ Deploy_<name>
 
-- 参数 ``--repo`` 用于指定jenkins上获取代码的VCS
+- 参数 ``--repo`` 用于指定jenkins上获取代码的VCS，只接受http协议地址。
 
 .. important::
     现在只支持GIT版本管理，并且git仓库必须是public类型的。
