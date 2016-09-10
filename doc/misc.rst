@@ -12,4 +12,7 @@ Application命名规范
 2. 项目组名和项目名由小写字母，数字， - (连接号)组成
 
 例如：
-dfis-mq-distributor
+
+::
+
+	dfis-mq-distributor
