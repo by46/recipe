@@ -33,3 +33,25 @@ temp
 	recipe create --template python.lib demo
 
 你可以通过 ``list`` 命令来查看有哪些可用的模板，详细使用请参考 `查看模板`_ 。
+
+
+
+查看模板
+---------------
+
+Recipe 提供了多种项目模板，你可以通过 list参数来查看所有可用的模板：
+
+::
+
+  recipe list
+
+
+查看版本信息
+---------------
+
+你可以通过version子命令来检查项目版本：
+
+::
+
+	recipe version
+

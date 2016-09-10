@@ -42,7 +42,7 @@ PIP使用细节可以参照 `PIP使用指南
   recipe create --init-repo demo
 
 
-3. 初始化持续集成流程
+3. 启动持续集成
 +++++++++++++++++
 
 使用 ``deploy`` 命令初始化持续集成流程：
@@ -55,7 +55,7 @@ PIP使用细节可以参照 `PIP使用指南
 Jenkins会从http://trgit2/dfis/demo.git的develop分支拉取代码，执行持续集成过程。
 
 
-4. GIT 设置
+4. 同步代码
 ++++++++++++++
 
 在生成Application时，Recipe已经创建了本地GIT仓库，并且已经为你预先创建了master， develop， feature-doc(用于书写项目文档)三个分支，
@@ -75,9 +75,10 @@ Jenkins会从http://trgit2/dfis/demo.git的develop分支拉取代码，执行持
 
 	Application第一次初始化时，会比较耗时，可能需要等待5-10分钟，请你耐性等待。
 
-5. GDEV 和 GQC
-+++++++++++++++++++
-当一切就绪之后，我们会部署GDEV和GQC两个环境，你可以通过访问下列url验证application。
+
+5. 验证
+++++++++++++++
+当一切就绪之后，我们已经部署GDEV和GQC两个环境，你可以通过访问下列url验证application。
 
 GDEV
 *******************************
@@ -86,27 +87,5 @@ http://SCMESOS02/demo/version
 GQC
 *******************************
 http://S1QDFIS02/demo/version
-
-
-
-
-查看模板
----------------
-
-Recipe 提供了多种项目模板，你可以通过 list参数来查看所有可用的模板：
-
-::
-
-  recipe list
-
-
-查看版本信息
----------------
-
-你可以通过version子命令来检查项目版本：
-
-::
-
-	recipe version
 
 
