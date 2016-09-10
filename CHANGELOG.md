@@ -1,5 +1,9 @@
 # Change log
 
+## [0.0.8]
+### Added
+- Support for apps cluster
+
 ## [0.0.7]
 ### Fixed
 - Fix templates hooks decode error
