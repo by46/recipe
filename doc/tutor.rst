@@ -58,7 +58,7 @@ Jenkins会从http://trgit2/dfis/demo.git的develop分支拉取代码，执行持
 4. GIT 设置
 ++++++++++++++
 
-因为我们的recipe已经创建了Application 项目目录，所以 ``git clone`` 已经不在适用，所以你可以参照下面命令设置git仓库：
+由于Application项目目录已经创建好，所以 ``git clone`` 已经不再适用，所以你可以参照下面命令设置git仓库：
 
 ::
 
@@ -68,13 +68,25 @@ Jenkins会从http://trgit2/dfis/demo.git的develop分支拉取代码，执行持
 	git push --all origin
 
 .. attention::
-	禁用autocrlf非常重要， 因为我们项目中包含了用于CI流程的shell脚本， ``LF`` 不能被替换成 ``CRLF``。
+	禁用autocrlf非常重要， 因为我们项目中包含了用于持续集成过程的shell脚本， ``LF`` 不能被替换成 ``CRLF``。
 
-	在我们初始化Application时，已经初始化好了本地GIT仓库，并且你预先创建master， develop， feature-doc(用于书写项目文档)三个分支，
+	在我们生成Application时，已经初始化好了本地GIT仓库，并且已经为你预先创建了master， develop， feature-doc(用于书写项目文档)三个分支，
 	所以只需要简单的设置远端GIT仓库地址，并同步master， develop，feature-doc分支代码到trgit2。
+
+	Application第一次初始化时，会比较耗时，可能需要等待5-10分钟，请你耐性等待。
 
 5. GDEV 和 GQC
 +++++++++++++++++++
+当一切就绪之后，我们会部署GDEV和GQC两个环境，你可以通过访问下列url验证application。
+
+GDEV
+*******************************
+http://SCMESOS02/demo/version
+
+GQC
+*******************************
+http://S1QDFIS02/demo/version
+
 
 
 
