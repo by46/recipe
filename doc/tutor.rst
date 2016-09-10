@@ -32,7 +32,7 @@ PIP使用细节可以参照 `PIP使用指南
 首先，你需要在trgit2代码托管仓库上创建一个git仓库，并记录下git仓库地址， 例如：http://trgit2/dfis/demo.git
 
 .. attention::
-	这里我们使用demo用于演示，但是你不应该使用该名称，我们建议你参考 :ref:`Application 命名规范 <chapter5index>`
+	这里我们使用demo用于演示，但是你不应该使用该名称，我们建议你参考 :ref:`Application 命名规范 <chapter5misc>`
 
 
 2. 生成Application
