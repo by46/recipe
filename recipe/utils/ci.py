@@ -1,6 +1,7 @@
 import json
 import logging
 import os.path
+import webbrowser
 
 from jenkins import Jenkins
 from jinja2 import Environment
@@ -70,8 +71,7 @@ def create_jenkins_jobs(project_slug, repo=None, jenkins=None, template=None):
     logger.debug("Loading jenkins from %s", jenkins_context_path)
     env = JenkinsContext(jenkins_context_path)
     context = dict(project_slug=project_slug,
-                   repo=repo,
-                   credential='30ba71ab-eec8-4082-b171-8edecfe076de')
+                   repo=repo)
 
     for job in reversed(env.jenkins_jobs()):
         job_name = '{0}_{1}'.format(job, project_slug)
@@ -93,3 +93,6 @@ def create_jenkins_jobs(project_slug, repo=None, jenkins=None, template=None):
     logger.info('Create jenkins view %s', project_slug)
     config = env.render('view.xml', context)
     client.create_view(project_slug, config)
+
+    view_url = '{0}/view/{1}'.format(url, project_slug)
+    webbrowser.open(view_url)

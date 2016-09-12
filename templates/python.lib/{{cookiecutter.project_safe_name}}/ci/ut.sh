@@ -1,6 +1,8 @@
 #! /bin/sh
 
-COVER=coverage
+COVER=./venv/bin/coverage
+
+./venv/bin/activate
 
 ${COVER} run --source {{cookiecutter.project_slug}} -m unittest discover --start-directory test --pattern test_*.py
 

@@ -1,4 +1,6 @@
 {
-  "project_slug": "deimos",
+  "project_name": "deimos",
+  "project_slug": "{{ cookiecutter.project_name|lower}}",
+  "project_safe_name": "{{ cookiecutter.project_name|lower}}",
   "author": "benjamin.c.yan"
 }

@@ -1,10 +1,16 @@
 # Change log
 
+## [0.0.8]
+### Added
+- Support for apps cluster
+- Add init-repo to initialize local git repository
+
 ## [0.0.7]
 ### Fixed
 - Fix templates hooks decode error
 - Fix exception log with run log level
 - Fix inaccuracy dependencies
+- Fix ci script error
 
 ## [0.0.6]
 

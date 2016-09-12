@@ -5,6 +5,7 @@ import tempfile
 
 from cookiecutter.exceptions import OutputDirExistsException
 from cookiecutter.main import cookiecutter
+from git.cmd import Git
 
 from recipe.commands import Command
 from recipe.utils import create_jenkins_jobs
@@ -29,7 +30,9 @@ class ProjectCommand(Command):
         parser.add_argument('-d', '--deploy', dest='deploy', action='store_true',
                             help='Create CI task on Jenkins after create project successfully.')
         parser.add_argument('-r', '--repo', dest='repo',
-                            help='the git repo on trgit2, like: http://trgit2/dfis/recipe.git')
+                            help='The git repo on trgit2, like: http://trgit2/dfis/recipe.git')
+        parser.add_argument('-i', '--init-repo', dest='init_repo', action='store_true', default=False,
+                            help='Init local git repository, create master, develop, feature-doc')
         parser.add_argument('name')
 
     def run(self):
@@ -62,14 +65,16 @@ class ProjectCommand(Command):
                 os.makedirs(args.out)
             gen_cookie_cutter_meta_json(temp_work_dir, project_slug)
 
-            cookiecutter(temp_work_dir, no_input=True, output_dir=args.out)
+            project_dir = cookiecutter(temp_work_dir, no_input=True, output_dir=args.out)
+            if self.options.init_repo:
+                self._init_local_repository(project_dir)
 
             if self.options.deploy:
                 self.logger.info('Create jenkins CI jobs.')
                 jenkins = self.config.get_tuple('jenkins', 'url', 'user', 'password')
                 create_jenkins_jobs(project_slug, self.options.repo, jenkins=jenkins, template=self.options.template)
 
-            self.logger.info('Create project %s success.', project_slug)
+            self.logger.info(u'Create project %s success on %s.', project_slug, project_dir)
         except OutputDirExistsException:
             self.logger.error(
                 u"Create Project failure : %s directory already exists, please ensure it does not exists. ",
@@ -80,6 +85,19 @@ class ProjectCommand(Command):
             self.logger.exception(e)
             self.logger.error("Create project %s failure.", project_slug)
             raise e
+
+    def _init_local_repository(self, workspace):
+        self.logger.info('Initialize local git repository, and create master, develop and feature-doc branch')
+        try:
+            repo = Git(workspace)
+            repo.init()
+            repo.execute('git add --all')
+            repo.execute("git commit -a -m 'init'")
+            repo.execute('git checkout -b feature-doc')
+            repo.execute('git checkout -b develop')
+        except Exception as e:
+            self.logger.exception(e)
+            self.logger.error('Initialize local git repository')
 
     def _post_generate(self, temp_work_dir, output_project=None):
         """ convert CRLF to LF line separator

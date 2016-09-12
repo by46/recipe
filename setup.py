@@ -28,7 +28,7 @@ def read_dependencies(requirements=missing):
         return []
     text = TextFile(requirements, lstrip_ws=True)
     try:
-        return text.readlines()
+        return [x.strip() for x in text.readlines() if not x.strip().startswith('--')]
     finally:
         text.close()
 

@@ -1,3 +1,4 @@
+--trusted-host scmesos06 --index http://scmesos06/simple
 cookiecutter
 jinja2
 python-jenkins
@@ -5,3 +6,4 @@ colorama
 six
 configparser
 simplekit>=0.0.6
+GitPython
