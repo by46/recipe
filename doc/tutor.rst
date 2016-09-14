@@ -52,7 +52,7 @@ PIP使用细节可以参照 `PIP使用指南
 
 ::
 
-  recipe deploy --repo http://trgit2/dfis/demo.git dfis-recipe-demo
+  recipe deploy --repo http://trgit2/dfis/dfis-recipe-demo.git dfis-recipe-demo
 
 
 Jenkins会从http://trgit2/dfis/dfis-recipe-demo.git的develop分支拉取代码，执行持续集成过程。
