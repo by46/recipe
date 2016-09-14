@@ -89,7 +89,7 @@ http://SCMESOS02/dfis_recipe_demo/version
 
 GQC
 *******************************
-http://S1QDFIS02/dfis_recipe_demo/version
+http://10.1.24.134/dfis_recipe_demo/version
 
 
 .. attention::
