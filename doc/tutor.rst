@@ -29,10 +29,10 @@ PIP使用细节可以参照 `PIP使用指南
 1. 创建Git仓库
 +++++++++++++
 
-首先，你需要在trgit2代码托管仓库上创建一个git仓库，并记录下git仓库地址， 例如：http://trgit2/dfis/demo.git
+首先，你需要在trgit2代码托管仓库上创建一个git仓库，并记录下git仓库地址， 例如：http://trgit2/dfis/dfis-recipe-demo.git
 
 .. attention::
-	这里我们使用demo用于演示，但是你不应该使用该名称，我们建议你参考 `Application 命名规范 <misc.html>`_
+	这里我们使用dfis-recipe-demo用于演示，但是你不应该使用该名称，我们建议你参考 `Application 命名规范 <misc.html>`_
 
 
 2. 生成Application
@@ -42,7 +42,7 @@ PIP使用细节可以参照 `PIP使用指南
 
 ::
 
-  recipe create --init-repo demo
+  recipe create --init-repo dfis-recipe-demo
 
 
 3. 启动持续集成
@@ -52,10 +52,10 @@ PIP使用细节可以参照 `PIP使用指南
 
 ::
 
-  recipe deploy --repo http://trgit2/dfis/demo.git demo
+  recipe deploy --repo http://trgit2/dfis/demo.git dfis-recipe-demo
 
 
-Jenkins会从http://trgit2/dfis/demo.git的develop分支拉取代码，执行持续集成过程。
+Jenkins会从http://trgit2/dfis/dfis-recipe-demo.git的develop分支拉取代码，执行持续集成过程。
 
 
 4. 同步代码
@@ -68,9 +68,9 @@ Jenkins会从http://trgit2/dfis/demo.git的develop分支拉取代码，执行持
 
 ::
 
-	cd demo
+	cd dfis-recipe-demo
 	git config core.autocrlf false
-	git remote add origin http://trgit2/dfis/demo.git
+	git remote add origin http://trgit2/dfis/dfis-recipe-demo.git
 	git push --all origin
 
 .. attention::
@@ -85,11 +85,11 @@ Jenkins会从http://trgit2/dfis/demo.git的develop分支拉取代码，执行持
 
 GDEV
 *******************************
-http://SCMESOS02/demo/version
+http://SCMESOS02/dfis_recipe_demo/version
 
 GQC
 *******************************
-http://S1QDFIS02/demo/version
+http://S1QDFIS02/dfis_recipe_demo/version
 
 
 .. attention::
