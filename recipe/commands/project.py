@@ -58,6 +58,9 @@ class ProjectCommand(Command):
             temp_work_dir = tempfile.mkdtemp(prefix='recipe-{0}-'.format(project_slug))
             os.rmdir(temp_work_dir)
             shutil.copytree(templates[args.template], temp_work_dir)
+
+            self._clear_project(temp_work_dir)
+
             self.logger.info('Copying project templates into %s', temp_work_dir)
 
             if not os.path.isdir(args.out):
@@ -99,7 +102,15 @@ class ProjectCommand(Command):
             self.logger.exception(e)
             self.logger.error('Initialize local git repository')
 
-    def _post_generate(self, temp_work_dir, output_project=None):
+    def _clear_project(self, work_dir):
+        # clear hooks file
+        hooks_path = os.path.join(work_dir, 'hooks')
+        for f in os.listdir(hooks_path):
+            full_path = os.path.join(hooks_path, f)
+            if os.path.isfile(full_path) and full_path.lower().endswith('.pyc'):
+                os.remove(full_path)
+
+    def _post_generate1(self, temp_work_dir, output_project=None):
         """ convert CRLF to LF line separator
 
         Because cookcutter #405 bug

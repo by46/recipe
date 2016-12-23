@@ -12,7 +12,7 @@ log_manager = Log()
 
 
 def create_app(config_name):
-    app = Flask(__name__)
+    app = Flask(__name__, static_url_path='/{{cookiecutter.project_slug}}/static')
     app.config.from_object('config.default')
     app.config.from_object('config.{0}'.format(config_name.lower()))
     app.config['VERSION'] = __version__

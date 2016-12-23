@@ -1,4 +1,11 @@
 # Change log
+## [0.0.10]
+### Fixed
+- fix hooks for .pyc files
+
+## [0.0.9]
+### Fixed
+- Support for nginx for static resource
 
 ## [0.0.8]
 ### Added
