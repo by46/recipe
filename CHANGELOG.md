@@ -1,4 +1,8 @@
 # Change log
+##[0.0.11]
+### Added
+- Add nodejs.express template
+
 ## [0.0.10]
 ### Fixed
 - fix hooks for .pyc files
