@@ -5,7 +5,7 @@ PATH=${WORKSPACE}/venv/bin:$PATH
 PYLINT=pylint
 
 if [ ! -d "venv" ]; then
-	HTTPS_PROXY=http://scpodb02:3128 virtualenv -v venv
+	virtualenv -v venv
 fi
 chmod +x ./venv/bin/activate
 
