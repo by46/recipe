@@ -5,7 +5,7 @@ PATH=${WORKSPACE}/venv/bin:$PATH
 PYLINT=pylint
 
 if [ ! -d "venv" ]; then
-	virtualenv venv
+	virtualenv -v venv
 fi
 chmod +x ./venv/bin/activate
 
