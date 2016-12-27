@@ -1,0 +1,6 @@
+{
+  "project_name": "deimos",
+  "project_safe_name": "{{ cookiecutter.project_name|lower}}",
+  "project_slug": "{{ cookiecutter.project_name|lower|replace('-', '_') }}",
+  "author": "Jaydon.T.Jin"
+}
