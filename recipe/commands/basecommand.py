@@ -9,6 +9,7 @@ from simplekit import email
 
 from recipe.utils import OptionParser
 from recipe.utils import config_logging
+from recipe.utils import RecipeRuntimeException
 
 EMAIL_API = 'http://10.16.75.24:3000/framework/v1/mail'
 
@@ -78,4 +79,4 @@ class Command(object):
                                                                                            datetime.now().strftime(
                                                                                                '%a %b %d %H:%M:%S %Y'))
             email.send_email(sender, receiver, subject, body, cc=cc, files=[self.options.log])
-            sys.exit(3)
+            raise RecipeRuntimeException(3)

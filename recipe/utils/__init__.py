@@ -11,3 +11,4 @@ from .exception import JenkinsJobForbiddenException
 from .exception import JenkinsViewForbiddenExceptioin
 from .exception import RecipeError
 from .exception import JenkinsException
+from .exception import RecipeRuntimeException

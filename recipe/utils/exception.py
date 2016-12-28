@@ -30,3 +30,14 @@ class JenkinsViewForbiddenExceptioin(JenkinsException):
         self.view_name = view_name
         message = "Jenkins view {0} already exists, create this views is forbidden".format(view_name)
         super(JenkinsViewForbiddenExceptioin, self).__init__(message)
+
+
+class RecipeRuntimeException(RecipeError):
+    """Recipe Base exception
+
+    """
+
+    def __init__(self, exit_code=1):
+        msg = 'Recipe Runtime exception, exit code {0}'.format(exit_code)
+        super(RecipeRuntimeException, self).__init__(msg)
+        self.exit_code = exit_code

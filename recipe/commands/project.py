@@ -13,6 +13,7 @@ from recipe.utils import gen_cookie_cutter_meta_json
 from recipe.utils import get_templates_home
 from recipe.utils import load_project_template
 from recipe.utils import valid_project_slug
+from recipe.utils import RecipeRuntimeException
 
 
 class ProjectCommand(Command):
@@ -53,7 +54,7 @@ class ProjectCommand(Command):
 
             if args.template not in templates:
                 self.logger.error('Project template %s does not exists', args.template)
-                sys.exit(1)
+                raise RecipeRuntimeException(1)
 
             temp_work_dir = tempfile.mkdtemp(prefix='recipe-{0}-'.format(project_slug))
             os.rmdir(temp_work_dir)
@@ -83,7 +84,7 @@ class ProjectCommand(Command):
                 u"Create Project failure : %s directory already exists, please ensure it does not exists. ",
                 os.path.join(args.out, project_slug))
             self.logger.error("Create project %s failure.", project_slug)
-            sys.exit(2)
+            raise RecipeRuntimeException(2)
         except Exception as e:
             self.logger.exception(e)
             self.logger.error("Create project %s failure.", project_slug)
