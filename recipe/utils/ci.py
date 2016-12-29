@@ -40,13 +40,14 @@ class JenkinsContext(object):
         return self.context.get('jobs')
 
 
-def create_jenkins_jobs(project_slug, repo=None, jenkins=None, template=None):
+def create_jenkins_jobs(project_slug, repo=None, jenkins=None, template=None, browse=False):
     """
 
     :param project_slug:
     :param repo:
     :param jenkins:
     :param template:
+    :param browse:
     :return:
     """
     if repo is None:
@@ -94,5 +95,6 @@ def create_jenkins_jobs(project_slug, repo=None, jenkins=None, template=None):
     config = env.render('view.xml', context)
     client.create_view(project_slug, config)
 
-    view_url = '{0}/view/{1}'.format(url, project_slug)
-    webbrowser.open(view_url)
+    if browse:
+        view_url = '{0}/view/{1}'.format(url, project_slug)
+        webbrowser.open(view_url)

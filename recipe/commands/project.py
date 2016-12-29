@@ -32,6 +32,8 @@ class ProjectCommand(Command):
                             help='Create CI task on Jenkins after create project successfully.')
         parser.add_argument('-r', '--repo', dest='repo',
                             help='The git repo on trgit2, like: http://trgit2/dfis/recipe.git')
+        parser.add_argument('-b', '--browse', dest='browse', action='store_true', default=False,
+                            help='Open jenkins views in default browser')
         parser.add_argument('-i', '--init-repo', dest='init_repo', action='store_true', default=False,
                             help='Init local git repository, create master, develop, feature-doc')
         parser.add_argument('name')
@@ -76,7 +78,7 @@ class ProjectCommand(Command):
             if self.options.deploy:
                 self.logger.info('Create jenkins CI jobs.')
                 jenkins = self.config.get_tuple('jenkins', 'url', 'user', 'password')
-                create_jenkins_jobs(project_slug, self.options.repo, jenkins=jenkins, template=self.options.template)
+                create_jenkins_jobs(project_slug, self.options.repo, jenkins=jenkins, template=self.options.template, browse=self.options.browse)
 
             self.logger.info(u'Create project %s success on %s.', project_slug, project_dir)
         except OutputDirExistsException:

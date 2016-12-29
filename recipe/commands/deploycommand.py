@@ -1,5 +1,3 @@
-import sys
-
 from recipe.commands import Command
 from recipe.utils import create_jenkins_jobs
 
@@ -14,6 +12,8 @@ class DeployCommand(Command):
                             help="project template name")
         parser.add_argument('-r', '--repo', dest='repo',
                             help='the git repo on trgit2, like: http://trgit2/dfis/recipe.git')
+        parser.add_argument('-b', '--browse', dest='browse', action='store_true', default=False,
+                            help='Open jenkins views in default browser')
         parser.add_argument('name')
 
     def run(self):
@@ -22,7 +22,8 @@ class DeployCommand(Command):
         repo = self.options.repo
         try:
             jenkins = self.config.get_tuple('jenkins', 'url', 'user', 'password')
-            create_jenkins_jobs(project_slug, repo, jenkins=jenkins, template=self.options.template)
+            create_jenkins_jobs(project_slug, repo, jenkins=jenkins, template=self.options.template,
+                                browse=self.options.browse)
             self.logger.info("Create Jenkins CI job success.")
         except Exception as e:
             self.logger.exception(e)
