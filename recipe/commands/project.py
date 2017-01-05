@@ -108,10 +108,12 @@ class ProjectCommand(Command):
     def _clear_project(self, work_dir):
         # clear hooks file
         hooks_path = os.path.join(work_dir, 'hooks')
-        for f in os.listdir(hooks_path):
-            full_path = os.path.join(hooks_path, f)
-            if os.path.isfile(full_path) and full_path.lower().endswith('.pyc'):
-                os.remove(full_path)
+
+        if os.path.exists(hooks_path):
+            for f in os.listdir(hooks_path):
+                full_path = os.path.join(hooks_path, f)
+                if os.path.isfile(full_path) and full_path.lower().endswith('.pyc'):
+                    os.remove(full_path)
 
     def _post_generate1(self, temp_work_dir, output_project=None):
         """ convert CRLF to LF line separator

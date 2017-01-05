@@ -41,3 +41,13 @@ class RecipeRuntimeException(RecipeError):
         msg = 'Recipe Runtime exception, exit code {0}'.format(exit_code)
         super(RecipeRuntimeException, self).__init__(msg)
         self.exit_code = exit_code
+
+class CloudDataException(RecipeError):
+    """Call Cloud Data Exception
+
+    """
+
+    def __init__(self, cloud_data,body):
+        msg = 'Cloud Data exception, {0} {1}'.format(cloud_data, body)
+        super(CloudDataException, self).__init__(msg)
+        self.cloud_data = cloud_data

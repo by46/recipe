@@ -2,18 +2,32 @@ import json
 import logging
 import os.path
 import webbrowser
+import requests
+import base64
 
 from jenkins import Jenkins
 from jinja2 import Environment
 from jinja2 import FileSystemLoader
 
+from .exception import CloudDataException
 from .exception import JenkinsJobForbiddenException
 from .exception import JenkinsViewForbiddenExceptioin
 from .project import get_templates_home
 from .project import load_project_template
 
+
 logger = logging.getLogger('recipe')
 
+
+class JenkinsCI(object):
+    def __init__(self, context_path=None):
+        if not (context_path and os.path.exists(context_path)):
+            context_path = os.path.normpath(os.path.join(__file__, '..', '..', 'ci'))
+        self.__env = Environment(loader=FileSystemLoader(context_path))
+
+    def render(self, name, context):
+        template = self.__env.get_template(name)
+        return template.render(**context)
 
 class JenkinsContext(object):
     def __init__(self, context_path=None):
@@ -40,7 +54,9 @@ class JenkinsContext(object):
         return self.context.get('jobs')
 
 
-def create_jenkins_jobs(project_slug, repo=None, jenkins=None, template=None, browse=False):
+def create_jenkins_jobs(project_slug, repo=None, jenkins=None, template=None, browse=False, jobs=None,
+                        gqc_replicas=1,
+                        gdev_replicas=1,cloud_data=None):
     """
 
     :param project_slug:
@@ -48,19 +64,30 @@ def create_jenkins_jobs(project_slug, repo=None, jenkins=None, template=None, br
     :param jenkins:
     :param template:
     :param browse:
+    :param jobs:
+    :param gdev_replicas:
+    :param gqc_replicas:
+    :param cloud_data:
+
     :return:
     """
     if repo is None:
         repo = ''
     if jenkins is None:
         jenkins = 'http://scdfis01:8080', 'recipe', 'recipe'
+    if cloud_data is None:
+        cloud_data = 'http://10.16.75.24:3000/datastore/v1/dfis/dae/'
+
+    cloud_data_key = "project:{0}".format(project_slug)
 
     jenkins_context_path = None
+    jenkins_ci_path = None
     if template is not None:
         templates_home = get_templates_home()
         templates = load_project_template(templates_home)
         if template in templates:
             jenkins_context_path = os.path.join(templates[template], 'context')
+            jenkins_ci_path = os.path.join(templates[template], 'ci')
 
     url, user, password = jenkins
 
@@ -70,11 +97,21 @@ def create_jenkins_jobs(project_slug, repo=None, jenkins=None, template=None, br
     client = Jenkins(url, user, password)
 
     logger.debug("Loading jenkins from %s", jenkins_context_path)
+    logger.debug("Loading ci form %s", jenkins_ci_path)
+
     env = JenkinsContext(jenkins_context_path)
+    ci_env = JenkinsCI(jenkins_ci_path)
+
     context = dict(project_slug=project_slug,
+                   gdev_replicas=gdev_replicas,
+                   gqc_replicas=gqc_replicas,
+                   cloud_data=base64.b64encode("{0}{1}".format(cloud_data, cloud_data_key)).replace("=", "\="),
                    repo=repo)
 
-    for job in reversed(env.jenkins_jobs()):
+    if not jobs:
+        jobs = reversed(env.jenkins_jobs())
+
+    for job in jobs:
         job_name = '{0}_{1}'.format(job, project_slug)
         if client.job_exists(job_name):
             raise JenkinsJobForbiddenException(job)
@@ -84,12 +121,32 @@ def create_jenkins_jobs(project_slug, repo=None, jenkins=None, template=None, br
         raise JenkinsViewForbiddenExceptioin(project_slug)
     logger.info('Is Jenkins View %s exists?False', project_slug)
 
-    for prefix in reversed(env.jenkins_jobs()):
+    job_count = len(jobs)
+    job_max_index = job_count - 1
+
+    job_conifg = []
+
+    for i in xrange(job_count):
+        prefix = jobs[i]
         job_name = '{0}_{1}'.format(prefix, project_slug)
         logger.info("Create Jenkins Job %s", job_name)
         template_name = '{0}.xml'.format(prefix.lower())
+        context['job'] = prefix
+        context['next_job'] = next_job(i, job_max_index, jobs)
         config = env.render(template_name, context)
         client.create_job(job_name, config)
+        logger.info("Create CI %s", job_name)
+        template_name = "{0}.sh".format(prefix.lower())
+        ci_config = ci_env.render(template_name, context)
+        job_conifg.append({prefix: ci_config})
+
+    body = {
+        'key': cloud_data_key,
+        'jobs': job_conifg
+    }
+    res = requests.post(cloud_data, headers={'Content-Type': 'application/json'}, json=body)
+    if res.status_code != 202:
+        raise CloudDataException(cloud_data, body)
 
     logger.info('Create jenkins view %s', project_slug)
     config = env.render('view.xml', context)
@@ -98,3 +155,10 @@ def create_jenkins_jobs(project_slug, repo=None, jenkins=None, template=None, br
     if browse:
         view_url = '{0}/view/{1}'.format(url, project_slug)
         webbrowser.open(view_url)
+
+def next_job(index, max_index, jobs):
+    next_index = index + 1
+    if next_index <= max_index:
+        return jobs[next_index]
+    return ""
+
