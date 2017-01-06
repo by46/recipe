@@ -55,6 +55,9 @@ class JenkinsContext(object):
 
 def create_jenkins_jobs(project_name, repo=None, jenkins=None, template=None, browse=False, jobs=None,
                         cloud_data_url=None,
+                        mail_list=None,
+                        gdev=None,
+                        gqc=None,
                         gqc_replicas=1,
                         gdev_replicas=1):
     """
@@ -65,9 +68,12 @@ def create_jenkins_jobs(project_name, repo=None, jenkins=None, template=None, br
     :param template:
     :param browse:
     :param jobs:
+    :param gqc:
+    :param gdev:
     :param gdev_replicas:
     :param gqc_replicas:
     :param cloud_data_url:
+    :param mail_list:
     :return ci jobs config:
     """
     if repo is None:
@@ -76,6 +82,12 @@ def create_jenkins_jobs(project_name, repo=None, jenkins=None, template=None, br
         jenkins = 'http://scdfis01:8080', 'recipe', 'recipe'
     if cloud_data_url is None:
         cloud_data_url = 'http://10.16.75.24:3000/datastore/v1/dfis/dae/project:{0}'.format(project_name)
+    if mail_list is None:
+        mail_list = "$DEFAULT_RECIPIENTS"
+    if gdev is None:
+        gdev = 'http://scmesos02/{0}/version'.format(project_name)
+    if gqc is None:
+        gqc = 'http://s1qdfis02/{0}/version'.format(project_name)
 
     jenkins_context_path = None
     jenkins_ci_path = None
@@ -104,6 +116,9 @@ def create_jenkins_jobs(project_name, repo=None, jenkins=None, template=None, br
                    project_slug=project_slug,
                    gdev_replicas=gdev_replicas,
                    gqc_replicas=gqc_replicas,
+                   mail_list=mail_list,
+                   gqc=gqc,
+                   gdev=gdev,
                    cloud_data=base64.b64encode(cloud_data_url).replace("=", "\="),
                    repo=repo)
 
