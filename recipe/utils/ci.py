@@ -79,7 +79,7 @@ def create_jenkins_jobs(project_name, repo=None, jenkins=None, template=None, br
     if repo is None:
         repo = ''
     if jenkins is None:
-        jenkins = 'http://scdfis01:8080', 'recipe', 'recipe'
+        jenkins = 'http://10.16.76.197:8080', 'recipe', 'recipe'
     if cloud_data_url is None:
         cloud_data_url = 'http://10.16.75.24:3000/datastore/v1/dfis/dae/project:{0}'.format(project_name)
     if mail_list is None:
