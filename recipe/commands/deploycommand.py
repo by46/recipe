@@ -20,8 +20,8 @@ class DeployCommand(Command):
                             help='gdev replicas')
         parser.add_argument('-qr', '--gqc_replicas', dest='gqc_replicas', default=1,
                             help='gqc replicas')
-        parser.add_argument('-d', '--cloud_data', dest='cloud_data', default=None,
-                            help='cloud data server')
+        parser.add_argument('-c', '--cloud_data_url', dest='cloud_data_url', default=None,
+                            help='cloud data url')
 
         parser.add_argument('name')
 
@@ -35,7 +35,7 @@ class DeployCommand(Command):
                                 jobs=self.options.jobs,
                                 gdev_replicas=self.options.gdev_replicas,
                                 gqc_replicas=self.options.gqc_replicas,
-                                cloud_data=self.options.cloud_data,
+                                cloud_data_url=self.options.cloud_data_url,
                                 browse=self.options.browse)
             self.logger.info("Create Jenkins CI job success.")
         except Exception as e:

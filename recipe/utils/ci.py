@@ -53,13 +53,13 @@ class JenkinsContext(object):
         """
         return self.context.get('jobs')
 
-
-def create_jenkins_jobs(project_slug, repo=None, jenkins=None, template=None, browse=False, jobs=None,
+def create_jenkins_jobs(project_name, repo=None, jenkins=None, template=None, browse=False, jobs=None,
+                        cloud_data_url=None,
                         gqc_replicas=1,
-                        gdev_replicas=1,cloud_data=None):
+                        gdev_replicas=1):
     """
 
-    :param project_slug:
+    :param project_name:
     :param repo:
     :param jenkins:
     :param template:
@@ -67,18 +67,15 @@ def create_jenkins_jobs(project_slug, repo=None, jenkins=None, template=None, br
     :param jobs:
     :param gdev_replicas:
     :param gqc_replicas:
-    :param cloud_data:
-
-    :return:
+    :param cloud_data_url:
+    :return ci jobs config:
     """
     if repo is None:
         repo = ''
     if jenkins is None:
         jenkins = 'http://scdfis01:8080', 'recipe', 'recipe'
-    if cloud_data is None:
-        cloud_data = 'http://10.16.75.24:3000/datastore/v1/dfis/dae/'
-
-    cloud_data_key = "project:{0}".format(project_slug)
+    if cloud_data_url is None:
+        cloud_data_url = 'http://10.16.75.24:3000/datastore/v1/dfis/dae/project:{0}'.format(project_name)
 
     jenkins_context_path = None
     jenkins_ci_path = None
@@ -91,7 +88,7 @@ def create_jenkins_jobs(project_slug, repo=None, jenkins=None, template=None, br
 
     url, user, password = jenkins
 
-    project_slug = project_slug.capitalize()
+    project_slug = project_name.capitalize()
 
     logger.info('Login in %s', url)
     client = Jenkins(url, user, password)
@@ -102,10 +99,12 @@ def create_jenkins_jobs(project_slug, repo=None, jenkins=None, template=None, br
     env = JenkinsContext(jenkins_context_path)
     ci_env = JenkinsCI(jenkins_ci_path)
 
-    context = dict(project_slug=project_slug,
+    context = dict(
+                   project_name=project_name,
+                   project_slug=project_slug,
                    gdev_replicas=gdev_replicas,
                    gqc_replicas=gqc_replicas,
-                   cloud_data=base64.b64encode("{0}{1}".format(cloud_data, cloud_data_key)).replace("=", "\="),
+                   cloud_data=base64.b64encode(cloud_data_url).replace("=", "\="),
                    repo=repo)
 
     if not jobs:
@@ -140,14 +139,6 @@ def create_jenkins_jobs(project_slug, repo=None, jenkins=None, template=None, br
         ci_config = ci_env.render(template_name, context)
         job_conifg.append({prefix: ci_config})
 
-    body = {
-        'key': cloud_data_key,
-        'jobs': job_conifg
-    }
-    res = requests.post(cloud_data, headers={'Content-Type': 'application/json'}, json=body)
-    if res.status_code != 202:
-        raise CloudDataException(cloud_data, body)
-
     logger.info('Create jenkins view %s', project_slug)
     config = env.render('view.xml', context)
     client.create_view(project_slug, config)
@@ -155,6 +146,8 @@ def create_jenkins_jobs(project_slug, repo=None, jenkins=None, template=None, br
     if browse:
         view_url = '{0}/view/{1}'.format(url, project_slug)
         webbrowser.open(view_url)
+
+    return job_conifg
 
 def next_job(index, max_index, jobs):
     next_index = index + 1
