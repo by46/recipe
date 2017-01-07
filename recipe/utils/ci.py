@@ -58,6 +58,7 @@ def create_jenkins_jobs(project_name, repo=None, jenkins=None, template=None, br
                         mail_list=None,
                         gdev=None,
                         gqc=None,
+                        group=None,
                         gqc_replicas=1,
                         gdev_replicas=1):
     """
@@ -69,6 +70,7 @@ def create_jenkins_jobs(project_name, repo=None, jenkins=None, template=None, br
     :param browse:
     :param jobs:
     :param gqc:
+    :param group:
     :param gdev:
     :param gdev_replicas:
     :param gqc_replicas:
@@ -88,6 +90,8 @@ def create_jenkins_jobs(project_name, repo=None, jenkins=None, template=None, br
         gdev = 'http://scmesos02/{0}/version'.format(project_name)
     if gqc is None:
         gqc = 'http://s1qdfis02/{0}/version'.format(project_name)
+    if group is None:
+        group = 'recipe'
 
     jenkins_context_path = None
     jenkins_ci_path = None
@@ -119,6 +123,7 @@ def create_jenkins_jobs(project_name, repo=None, jenkins=None, template=None, br
                    mail_list=mail_list,
                    gqc=gqc,
                    gdev=gdev,
+                   group=group,
                    cloud_data=base64.b64encode(cloud_data_url).replace("=", "\="),
                    repo=repo)
 
