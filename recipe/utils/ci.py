@@ -53,6 +53,7 @@ class JenkinsContext(object):
         """
         return self.context.get('jobs')
 
+
 def create_jenkins_jobs(project_name, repo=None, jenkins=None, template=None, browse=False, jobs=None,
                         cloud_data_url=None,
                         mail_list=None,
@@ -127,18 +128,18 @@ def create_jenkins_jobs(project_name, repo=None, jenkins=None, template=None, br
                    cloud_data=base64.b64encode(cloud_data_url).replace("=", "\="),
                    repo=repo)
 
-    if not jobs:
-        jobs = reversed(env.jenkins_jobs())
+    jenkins_jobs = reversed(env.jenkins_jobs())
 
-    for job in jobs:
+    if not jobs:
+        jobs = jenkins_jobs
+
+    for job in jenkins_jobs:
         job_name = '{0}_{1}'.format(job, project_slug)
         if client.job_exists(job_name):
-            raise JenkinsJobForbiddenException(job)
-        logger.info('Is Jenkins Job %s exists?False', job_name)
+            client.delete_job(job_name)
 
     if client.view_exists(project_slug):
-        raise JenkinsViewForbiddenExceptioin(project_slug)
-    logger.info('Is Jenkins View %s exists?False', project_slug)
+        client.delete_view(project_slug)
 
     job_count = len(jobs)
     job_max_index = job_count - 1
@@ -168,6 +169,7 @@ def create_jenkins_jobs(project_name, repo=None, jenkins=None, template=None, br
         webbrowser.open(view_url)
 
     return job_conifg
+
 
 def next_job(index, max_index, jobs):
     next_index = index + 1
