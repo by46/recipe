@@ -171,6 +171,55 @@ def create_jenkins_jobs(project_name, repo=None, jenkins=None, template=None, br
     return job_conifg
 
 
+def delete_jenkins_jobs(project_name, jenkins=None, template=None, jobs=None):
+    """
+
+    :param project_name:
+    :param jenkins:
+    :param template:
+    :param jobs:
+
+    :return:
+    """
+
+    if template is None:
+        raise KeyError()
+
+    if jenkins is None:
+        jenkins = 'http://10.16.76.197:8080', 'recipe', 'recipe'
+
+    jenkins_context_path = None
+
+    templates_home = get_templates_home()
+    templates = load_project_template(templates_home)
+    if template in templates:
+        jenkins_context_path = os.path.join(templates[template], 'context')
+
+    url, user, password = jenkins
+
+    project_slug = project_name.capitalize()
+
+    logger.info('Login in %s', url)
+    client = Jenkins(url, user, password)
+
+    logger.debug("Loading jenkins from %s", jenkins_context_path)
+
+    env = JenkinsContext(jenkins_context_path)
+
+    jenkins_jobs = reversed(env.jenkins_jobs())
+
+    if not jobs:
+        jobs = jenkins_jobs
+
+    for job in jobs:
+        job_name = '{0}_{1}'.format(job, project_slug)
+        if client.job_exists(job_name):
+            client.delete_job(job_name)
+
+    if client.view_exists(project_slug):
+        client.delete_view(project_slug)
+
+
 def next_job(index, max_index, jobs):
     next_index = index + 1
     if next_index <= max_index:
