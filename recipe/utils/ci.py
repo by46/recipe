@@ -211,6 +211,32 @@ def delete_jenkins_jobs(project_name, jenkins=None, template=None, jobs=None):
         client.delete_view(project_slug)
 
 
+def run_jenkins_job(project_name, job, jenkins=None):
+    """
+
+    :param project_name:
+    :param job:
+    :param jenkins:
+
+    :return:
+    """
+    if project_name is None or job is None:
+        return
+
+    if jenkins is None:
+        jenkins = 'http://10.16.76.197:8080', 'recipe', 'recipe'
+
+    url, user, password = jenkins
+
+    project_slug = project_name.capitalize()
+
+    logger.info('Login in %s', url)
+    client = Jenkins(url, user, password)
+
+    job_name = "{0}_{1}".format(job, project_slug)
+    client.build_job(job_name)
+
+
 def next_job(index, max_index, jobs):
     next_index = index + 1
     if next_index <= max_index:
