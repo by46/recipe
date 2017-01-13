@@ -29,6 +29,7 @@ class JenkinsCI(object):
         template = self.__env.get_template(name)
         return template.render(**context)
 
+
 class JenkinsContext(object):
     def __init__(self, context_path=None):
         if not (context_path and os.path.exists(context_path)):
@@ -182,18 +183,17 @@ def delete_jenkins_jobs(project_name, jenkins=None, template=None, jobs=None):
     :return:
     """
 
-    if template is None:
-        raise KeyError()
+    if template is not None:
+        templates_home = get_templates_home()
+        templates = load_project_template(templates_home)
+        if template in templates:
+            jenkins_context_path = os.path.join(templates[template], 'context')
+            env = JenkinsContext(jenkins_context_path)
+            logger.debug("Loading jenkins from %s", jenkins_context_path)
+            jobs = reversed(env.jenkins_jobs())
 
     if jenkins is None:
         jenkins = 'http://10.16.76.197:8080', 'recipe', 'recipe'
-
-    jenkins_context_path = None
-
-    templates_home = get_templates_home()
-    templates = load_project_template(templates_home)
-    if template in templates:
-        jenkins_context_path = os.path.join(templates[template], 'context')
 
     url, user, password = jenkins
 
@@ -201,15 +201,6 @@ def delete_jenkins_jobs(project_name, jenkins=None, template=None, jobs=None):
 
     logger.info('Login in %s', url)
     client = Jenkins(url, user, password)
-
-    logger.debug("Loading jenkins from %s", jenkins_context_path)
-
-    env = JenkinsContext(jenkins_context_path)
-
-    jenkins_jobs = reversed(env.jenkins_jobs())
-
-    if not jobs:
-        jobs = jenkins_jobs
 
     for job in jobs:
         job_name = '{0}_{1}'.format(job, project_slug)
