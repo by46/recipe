@@ -18,6 +18,16 @@ from .project import load_project_template
 
 logger = logging.getLogger('recipe')
 
+NEXT_JOB_TEMPLATE = "<hudson.tasks.BuildTrigger>" \
+                    "<childProjects>{0}</childProjects>" \
+                    "<threshold>" \
+                    "<name>SUCCESS</name>" \
+                    "<ordinal>0</ordinal>" \
+                    "<color>BLUE</color>" \
+                    "<completeBuild>true</completeBuild>" \
+                    "</threshold>" \
+                    "</hudson.tasks.BuildTrigger>"
+
 
 class JenkinsCI(object):
     def __init__(self, context_path=None):
@@ -126,6 +136,7 @@ def create_jenkins_jobs(project_name, repo=None, jenkins=None, template=None, br
                    gqc=gqc,
                    gdev=gdev,
                    group=group,
+                   mail_trigger="FailureTrigger",
                    cloud_data=base64.b64encode(cloud_data_url).replace("=", "\="),
                    repo=repo)
 
@@ -153,7 +164,14 @@ def create_jenkins_jobs(project_name, repo=None, jenkins=None, template=None, br
         logger.info("Create Jenkins Job %s", job_name)
         template_name = '{0}.xml'.format(prefix.lower())
         context['job'] = prefix
-        context['next_job'] = next_job(i, job_max_index, jobs)
+        next_job_name = next_job(i, job_max_index, jobs)
+
+        if next_job_name:
+            context['build_trigger'] = NEXT_JOB_TEMPLATE.format(next_job_name + "_" + project_slug)
+        else:
+            context['build_trigger'] = ""
+            context['mail_trigger'] = "AlwaysTrigger"
+
         config = env.render(template_name, context)
         client.create_job(job_name, config)
         logger.info("Create CI %s", job_name)
