@@ -73,7 +73,7 @@ def create_jenkins_jobs(project_name, repo=None, jenkins=None, template=None, br
                         group=None,
                         gqc_replicas=1,
                         gdev_replicas=1,
-                        fitnesse_host='10.16.76.248', fitnesse_port=8566, fitnesse_target_page=''):
+                        ** kw):
     """
 
     :param project_name:
@@ -139,10 +139,11 @@ def create_jenkins_jobs(project_name, repo=None, jenkins=None, template=None, br
                    group=group,
                    mail_trigger="FailureTrigger",
                    cloud_data=base64.b64encode(cloud_data_url).replace("=", "\="),
-                   fitnesse_host=fitnesse_host,
-                   fitnesse_port=fitnesse_port,
-                   fitnesse_target_page=fitnesse_target_page,
                    repo=repo)
+
+    for key in kw:
+        print key
+        context[key] = kw[key]
 
     jenkins_jobs = reversed(env.jenkins_jobs())
 

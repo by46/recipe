@@ -1,4 +1,4 @@
 __author__ = 'benjamin.c.yan'
 
-__version__ = '0.0.11'
+__version__ = '0.0.12'
 
