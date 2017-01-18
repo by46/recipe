@@ -114,6 +114,8 @@ def create_jenkins_jobs(project_name, repo=None, jenkins=None, template=None, br
         if template in templates:
             jenkins_context_path = os.path.join(templates[template], 'context')
             jenkins_ci_path = os.path.join(templates[template], 'ci')
+            if not os.path.exists(jenkins_ci_path):
+                jenkins_ci_path = os.path.join(templates[template], '{{cookiecutter.project_safe_name}}', 'ci')
 
     url, user, password = jenkins
 
