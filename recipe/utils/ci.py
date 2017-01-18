@@ -144,10 +144,15 @@ def create_jenkins_jobs(project_name, repo=None, jenkins=None, template=None, br
     for key in kw:
         context[key] = kw[key]
 
-    jenkins_jobs = reversed(env.jenkins_jobs())
+    jenkins_jobs = env.jenkins_jobs()
 
-    if not jobs:
+    if jobs:
+        job_count = len(jobs)
+    else:
+        job_count = len(jenkins_jobs)
         jobs = jenkins_jobs
+
+    jenkins_jobs = reversed(env.jenkins_jobs())
 
     for job in jenkins_jobs:
         job_name = '{0}_{1}'.format(job, project_slug)
@@ -157,9 +162,7 @@ def create_jenkins_jobs(project_name, repo=None, jenkins=None, template=None, br
     if client.view_exists(project_slug):
         client.delete_view(project_slug)
 
-    job_count = len(jobs)
     job_max_index = job_count - 1
-
     job_conifg = []
 
     for i in xrange(job_count):
