@@ -142,7 +142,6 @@ def create_jenkins_jobs(project_name, repo=None, jenkins=None, template=None, br
                    repo=repo)
 
     for key in kw:
-        print key
         context[key] = kw[key]
 
     jenkins_jobs = reversed(env.jenkins_jobs())
