@@ -15,9 +15,6 @@ from .exception import JenkinsViewForbiddenExceptioin
 from .project import get_templates_home
 from .project import load_project_template
 
-
-logger = logging.getLogger('recipe')
-
 NEXT_JOB_TEMPLATE = "<hudson.tasks.BuildTrigger>" \
                     "<childProjects>{0}</childProjects>" \
                     "<threshold>" \
@@ -74,6 +71,7 @@ def create_jenkins_jobs(project_name, repo=None, jenkins=None, template=None, br
                         gqc_replicas=1,
                         gdev_replicas=1,
                         render_ci=False,
+                        logger=None,
                         ** kw):
     """
 
@@ -107,6 +105,8 @@ def create_jenkins_jobs(project_name, repo=None, jenkins=None, template=None, br
         gqc = 'http://s1qdfis02/{0}/version'.format(project_name)
     if group is None:
         group = 'recipe'
+    if logger is None:
+        logger = logging.getLogger('recipe')
 
     jenkins_context_path = None
     jenkins_ci_path = None
@@ -202,13 +202,14 @@ def create_jenkins_jobs(project_name, repo=None, jenkins=None, template=None, br
     return job_conifg
 
 
-def delete_jenkins_jobs(project_name, jenkins=None, template=None, jobs=None):
+def delete_jenkins_jobs(project_name, jenkins=None, template=None, jobs=None, logger=None):
     """
 
     :param project_name:
     :param jenkins:
     :param template:
     :param jobs:
+    :param logger:
 
     :return:
     """
@@ -224,6 +225,9 @@ def delete_jenkins_jobs(project_name, jenkins=None, template=None, jobs=None):
 
     if jenkins is None:
         jenkins = 'http://10.16.76.197:8080', 'recipe', 'recipe'
+
+    if logger is None:
+        logger = logging.getLogger('recipe')
 
     url, user, password = jenkins
 
@@ -241,12 +245,13 @@ def delete_jenkins_jobs(project_name, jenkins=None, template=None, jobs=None):
         client.delete_view(project_slug)
 
 
-def run_jenkins_job(project_name, job, jenkins=None):
+def run_jenkins_job(project_name, job, jenkins=None, logger=None):
     """
 
     :param project_name:
     :param job:
     :param jenkins:
+    :param logger:
 
     :return:
     """
@@ -255,6 +260,9 @@ def run_jenkins_job(project_name, job, jenkins=None):
 
     if jenkins is None:
         jenkins = 'http://10.16.76.197:8080', 'recipe', 'recipe'
+
+    if logger is None:
+        logger = logging.getLogger('recipe')
 
     url, user, password = jenkins
 
