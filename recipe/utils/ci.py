@@ -73,6 +73,7 @@ def create_jenkins_jobs(project_name, repo=None, jenkins=None, template=None, br
                         group=None,
                         gqc_replicas=1,
                         gdev_replicas=1,
+                        render_ci=False,
                         ** kw):
     """
 
@@ -89,6 +90,7 @@ def create_jenkins_jobs(project_name, repo=None, jenkins=None, template=None, br
     :param gqc_replicas:
     :param cloud_data_url:
     :param mail_list:
+    :param render_ci:
     :return ci jobs config:
     """
     if repo is None:
@@ -113,9 +115,8 @@ def create_jenkins_jobs(project_name, repo=None, jenkins=None, template=None, br
         templates = load_project_template(templates_home)
         if template in templates:
             jenkins_context_path = os.path.join(templates[template], 'context')
-            jenkins_ci_path = os.path.join(templates[template], 'ci')
-            if not os.path.exists(jenkins_ci_path):
-                jenkins_ci_path = os.path.join(templates[template], '{{cookiecutter.project_safe_name}}', 'ci')
+            if render_ci:
+                jenkins_ci_path = os.path.join(templates[template], 'ci')
 
     url, user, password = jenkins
 
@@ -125,10 +126,11 @@ def create_jenkins_jobs(project_name, repo=None, jenkins=None, template=None, br
     client = Jenkins(url, user, password)
 
     logger.debug("Loading jenkins from %s", jenkins_context_path)
-    logger.debug("Loading ci form %s", jenkins_ci_path)
-
     env = JenkinsContext(jenkins_context_path)
-    ci_env = JenkinsCI(jenkins_ci_path)
+
+    if render_ci:
+        logger.debug("Loading ci form %s", jenkins_ci_path)
+        ci_env = JenkinsCI(jenkins_ci_path)
 
     context = dict(
                    project_name=project_name,
@@ -183,10 +185,11 @@ def create_jenkins_jobs(project_name, repo=None, jenkins=None, template=None, br
 
         config = env.render(template_name, context)
         client.create_job(job_name, config)
-        logger.info("Create CI %s", job_name)
-        template_name = "{0}.sh".format(prefix.lower())
-        ci_config = ci_env.render(template_name, context)
-        job_conifg.append({prefix: ci_config})
+        if render_ci:
+            logger.info("Create CI %s", job_name)
+            template_name = "{0}.sh".format(prefix.lower())
+            ci_config = ci_env.render(template_name, context)
+            job_conifg.append({prefix: ci_config})
 
     logger.info('Create jenkins view %s', project_slug)
     config = env.render('view.xml', context)
