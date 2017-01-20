@@ -159,7 +159,11 @@ def create_jenkins_jobs(project_name, repo=None, jenkins=None, template=None, br
     jenkins_jobs = reversed(env.jenkins_jobs())
 
     for job in jenkins_jobs:
-        job_name = '{0}_{1}'.format(job, project_slug)
+        if isinstance(job, dict):
+            job_name = '{0}_{1}'.format(job['name'], project_slug)
+        else:
+            job_name = '{0}_{1}'.format(job, project_slug)
+
         if client.job_exists(job_name):
             client.delete_job(job_name)
 
@@ -184,6 +188,7 @@ def create_jenkins_jobs(project_name, repo=None, jenkins=None, template=None, br
             context['mail_trigger'] = "AlwaysTrigger"
 
         config = env.render(template_name, context)
+
         client.create_job(job_name, config)
         if render_ci:
             logger.info("Create CI %s", job_name)
