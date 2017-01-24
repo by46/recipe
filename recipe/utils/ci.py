@@ -120,6 +120,7 @@ def create_jenkins_jobs(project_name, repo=None, jenkins=None, template=None, br
 
     url, user, password = jenkins
 
+    group_slug = group.capitalize()
     project_slug = project_name.capitalize()
 
     logger.info('Login in %s', url)
@@ -141,6 +142,7 @@ def create_jenkins_jobs(project_name, repo=None, jenkins=None, template=None, br
                    gqc=gqc,
                    gdev=gdev,
                    group=group,
+                   group_slug=group_slug,
                    mail_trigger="FailureTrigger",
                    cloud_data=base64.b64encode(cloud_data_url).replace("=", "\="),
                    repo=repo)
@@ -166,9 +168,12 @@ def create_jenkins_jobs(project_name, repo=None, jenkins=None, template=None, br
 
         if client.job_exists(job_name):
             client.delete_job(job_name)
+    view_name = project_slug
+    if render_ci:
+        view_name = group_slug
 
-    if client.view_exists(project_slug):
-        client.delete_view(project_slug)
+    if client.view_exists(view_name):
+        client.delete_view(view_name)
 
     job_max_index = job_count - 1
     job_conifg = []
@@ -198,10 +203,10 @@ def create_jenkins_jobs(project_name, repo=None, jenkins=None, template=None, br
 
     logger.info('Create jenkins view %s', project_slug)
     config = env.render('view.xml', context)
-    client.create_view(project_slug, config)
+    client.create_view(view_name, config)
 
     if browse:
-        view_url = '{0}/view/{1}'.format(url, project_slug)
+        view_url = '{0}/view/{1}'.format(url, view_name)
         webbrowser.open(view_url)
 
     return job_conifg
