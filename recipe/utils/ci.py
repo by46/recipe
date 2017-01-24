@@ -108,6 +108,7 @@ def create_jenkins_jobs(project_name, repo=None, jenkins=None, template=None, br
     if logger is None:
         logger = logging.getLogger('recipe')
 
+
     jenkins_context_path = None
     jenkins_ci_path = None
     if template is not None:
@@ -122,6 +123,10 @@ def create_jenkins_jobs(project_name, repo=None, jenkins=None, template=None, br
 
     group_slug = group.capitalize()
     project_slug = project_name.capitalize()
+
+    view_name = project_slug
+    if render_ci:
+        view_name = group_slug
 
     logger.info('Login in %s', url)
     client = Jenkins(url, user, password)
@@ -159,6 +164,7 @@ def create_jenkins_jobs(project_name, repo=None, jenkins=None, template=None, br
         jobs = jenkins_jobs
 
     jenkins_jobs = reversed(env.jenkins_jobs())
+    project_slug = "{0}_{1}".format(group_slug, project_slug)
 
     for job in jenkins_jobs:
         if isinstance(job, dict):
@@ -168,9 +174,6 @@ def create_jenkins_jobs(project_name, repo=None, jenkins=None, template=None, br
 
         if client.job_exists(job_name):
             client.delete_job(job_name)
-    view_name = project_slug
-    if render_ci:
-        view_name = group_slug
 
     if client.view_exists(view_name):
         client.delete_view(view_name)
@@ -201,7 +204,7 @@ def create_jenkins_jobs(project_name, repo=None, jenkins=None, template=None, br
             ci_config = ci_env.render(template_name, context)
             job_conifg.append({prefix: ci_config})
 
-    logger.info('Create jenkins view %s', project_slug)
+    logger.info('Create jenkins view %s', view_name)
     config = env.render('view.xml', context)
     client.create_view(view_name, config)
 
