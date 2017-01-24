@@ -45,11 +45,13 @@ def load_project_template(roots):
     return templates
 
 
-def gen_cookie_cutter_meta_json(home, project_slug):
+def gen_cookie_cutter_meta_json(home, project_slug, group_slug=None):
     json_path = os.path.join(home, 'cookiecutter.json')
     with open(json_path, 'rb') as f:
         obj = load(f)
 
     obj['project_name'] = project_slug
+    if group_slug:
+        obj['group_name'] = group_slug
     with open(json_path, 'wb') as f:
         dump(obj, f)
