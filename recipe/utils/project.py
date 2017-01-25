@@ -45,7 +45,7 @@ def load_project_template(roots):
     return templates
 
 
-def gen_cookie_cutter_meta_json(home, project_slug, group_slug=None, author=None, env=None):
+def gen_cookie_cutter_meta_json(home, project_slug, group_slug=None):
     json_path = os.path.join(home, 'cookiecutter.json')
     with open(json_path, 'rb') as f:
         obj = load(f)
@@ -53,10 +53,6 @@ def gen_cookie_cutter_meta_json(home, project_slug, group_slug=None, author=None
     obj['project_name'] = project_slug
     if group_slug:
         obj['group_name'] = group_slug
-    if author is not None:
-        obj['author'] = author
-    if env is  None:
-        env = "gdev"
-    obj['env'] = env
+
     with open(json_path, 'wb') as f:
         dump(obj, f)
