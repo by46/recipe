@@ -103,6 +103,7 @@ def create_jenkins_jobs(project_name, repo=None, jenkins=None, template=None, br
         gdev = 'http://scmesos02/{0}/version'.format(project_name)
     if gqc is None:
         gqc = 'http://s1qdfis02/{0}/version'.format(project_name)
+
     if group is None:
         group = 'recipe'
     if logger is None:
@@ -164,7 +165,8 @@ def create_jenkins_jobs(project_name, repo=None, jenkins=None, template=None, br
         jobs = jenkins_jobs
 
     jenkins_jobs = reversed(env.jenkins_jobs())
-    project_slug = "{0}_{1}".format(group_slug, project_slug)
+    if render_ci:
+        project_slug = "{0}_{1}".format(group_slug, project_slug)
 
     for job in jenkins_jobs:
         if isinstance(job, dict):
@@ -215,10 +217,11 @@ def create_jenkins_jobs(project_name, repo=None, jenkins=None, template=None, br
     return job_conifg
 
 
-def delete_jenkins_jobs(project_name, jenkins=None, template=None, jobs=None, logger=None):
+def delete_jenkins_jobs(project_name, group=None, jenkins=None, template=None, jobs=None, logger=None):
     """
 
     :param project_name:
+    :param group:
     :param jenkins:
     :param template:
     :param jobs:
@@ -245,6 +248,10 @@ def delete_jenkins_jobs(project_name, jenkins=None, template=None, jobs=None, lo
     url, user, password = jenkins
 
     project_slug = project_name.capitalize()
+    view_name = project_slug
+    if group:
+        view_name = group.capitalize()
+        project_slug = '{0}_{1}'.format(view_name, project_slug)
 
     logger.info('Login in %s', url)
     client = Jenkins(url, user, password)
@@ -254,15 +261,16 @@ def delete_jenkins_jobs(project_name, jenkins=None, template=None, jobs=None, lo
         if client.job_exists(job_name):
             client.delete_job(job_name)
 
-    if client.view_exists(project_slug):
-        client.delete_view(project_slug)
+    if client.view_exists(view_name):
+        client.delete_view(view_name)
 
 
-def run_jenkins_job(project_name, job, jenkins=None, logger=None):
+def run_jenkins_job(project_name, job, group=None, jenkins=None, logger=None):
     """
 
     :param project_name:
     :param job:
+    :param group:
     :param jenkins:
     :param logger:
 
@@ -280,6 +288,8 @@ def run_jenkins_job(project_name, job, jenkins=None, logger=None):
     url, user, password = jenkins
 
     project_slug = project_name.capitalize()
+    if group:
+        project_slug = '{0}_{1}'.format(group.capitalize(), project_slug)
 
     logger.info('Login in %s', url)
     client = Jenkins(url, user, password)
