@@ -37,6 +37,8 @@ class ProjectCommand(Command):
         parser.add_argument('-i', '--init-repo', dest='init_repo', action='store_true', default=False,
                             help='Init local git repository, create master, develop, feature-doc')
         parser.add_argument('-g', '--group-name', dest='group', default=None, help='group name')
+        parser.add_argument('-a', '--author', dest='author', default=None, help='author')
+        parser.add_argument('-e', '--env', dest='env', default=None, help='env')
         parser.add_argument('name')
 
     def run(self):
@@ -70,7 +72,7 @@ class ProjectCommand(Command):
             if not os.path.isdir(args.out):
                 self.logger.info('Creating output dir %s', args.out)
                 os.makedirs(args.out)
-            gen_cookie_cutter_meta_json(temp_work_dir, project_slug, args.group)
+            gen_cookie_cutter_meta_json(temp_work_dir, project_slug, args.group, args.author, args.env)
 
             project_dir = cookiecutter(temp_work_dir, no_input=True, output_dir=args.out)
             if self.options.init_repo:
