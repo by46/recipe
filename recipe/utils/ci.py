@@ -177,9 +177,6 @@ def create_jenkins_jobs(project_name, repo=None, jenkins=None, template=None, br
         if client.job_exists(job_name):
             client.delete_job(job_name)
 
-    if client.view_exists(view_name):
-        client.delete_view(view_name)
-
     job_max_index = job_count - 1
     job_conifg = []
 
@@ -208,7 +205,8 @@ def create_jenkins_jobs(project_name, repo=None, jenkins=None, template=None, br
 
     logger.info('Create jenkins view %s', view_name)
     config = env.render('view.xml', context)
-    client.create_view(view_name, config)
+    if not client.view_exists(view_name):
+        client.create_view(view_name, config)
 
     if browse:
         view_url = '{0}/view/{1}'.format(url, view_name)
