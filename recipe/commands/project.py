@@ -35,9 +35,8 @@ class ProjectCommand(Command):
         parser.add_argument('-b', '--browse', dest='browse', action='store_true', default=False,
                             help='Open jenkins views in default browser')
         parser.add_argument('-i', '--init-repo', dest='init_repo', action='store_true', default=False,
-                            help='Init local git repository, create master, develop, feature-doc'),
-        parser.add_argument('-g', '--group-name', dest='group', action='store_true', default=None,
-                            help='group name')
+                            help='Init local git repository, create master, develop, feature-doc')
+        parser.add_argument('-g', '--group-name', dest='group', default=None, help='group name')
         parser.add_argument('name')
 
     def run(self):
