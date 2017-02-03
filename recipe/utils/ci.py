@@ -215,7 +215,8 @@ def create_jenkins_jobs(project_name, repo=None, jenkins=None, template=None, br
     return job_conifg
 
 
-def delete_jenkins_jobs(project_name, group=None, jenkins=None, template=None, jobs=None, logger=None):
+def delete_jenkins_jobs(project_name, group=None, jenkins=None, template=None, jobs=None,
+                        logger=None, delete_view=True):
     """
 
     :param project_name:
@@ -224,6 +225,7 @@ def delete_jenkins_jobs(project_name, group=None, jenkins=None, template=None, j
     :param template:
     :param jobs:
     :param logger:
+    :param delete_view:
 
     :return:
     """
@@ -259,7 +261,7 @@ def delete_jenkins_jobs(project_name, group=None, jenkins=None, template=None, j
         if client.job_exists(job_name):
             client.delete_job(job_name)
 
-    if client.view_exists(view_name):
+    if delete_view and client.view_exists(view_name):
         client.delete_view(view_name)
 
 
