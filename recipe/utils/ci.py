@@ -120,7 +120,6 @@ def create_jenkins_jobs(project_name, repo=None, jenkins=None, template=None, br
             jenkins_context_path = os.path.join(base_dir, 'context')
             if render_ci:
                 jenkins_ci_path = os.path.join(base_dir, 'ci')
-                dockerfile_path = os.path.join(jenkins_ci_path, 'Dockerfile')
 
     url, user, password = jenkins
 
@@ -181,10 +180,6 @@ def create_jenkins_jobs(project_name, repo=None, jenkins=None, template=None, br
 
     job_max_index = job_count - 1
     job_conifg = []
-    dockerfile = None
-
-    if dockerfile_path and os.path.exists(dockerfile_path):
-        dockerfile = ci_env.render("Dockerfile", context)
 
     for i in xrange(job_count):
         prefix = jobs[i]
@@ -218,7 +213,7 @@ def create_jenkins_jobs(project_name, repo=None, jenkins=None, template=None, br
         view_url = '{0}/view/{1}'.format(url, view_name)
         webbrowser.open(view_url)
 
-    return job_conifg, dockerfile
+    return job_conifg
 
 
 def delete_jenkins_jobs(project_name, group=None, jenkins=None, template=None, jobs=None,
