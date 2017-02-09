@@ -89,6 +89,7 @@ def create_jenkins_jobs(project_name, repo=None, jenkins=None, template=None, br
     :param cloud_data_url:
     :param mail_list:
     :param render_ci:
+    :param logger:
     :return ci jobs config:
     """
     if repo is None:
@@ -109,16 +110,17 @@ def create_jenkins_jobs(project_name, repo=None, jenkins=None, template=None, br
     if logger is None:
         logger = logging.getLogger('recipe')
 
-
     jenkins_context_path = None
     jenkins_ci_path = None
     if template is not None:
         templates_home = get_templates_home()
         templates = load_project_template(templates_home)
         if template in templates:
-            jenkins_context_path = os.path.join(templates[template], 'context')
+            base_dir = templates[template]
+            jenkins_context_path = os.path.join(base_dir, 'context')
             if render_ci:
-                jenkins_ci_path = os.path.join(templates[template], 'ci')
+                jenkins_ci_path = os.path.join(base_dir, 'ci')
+                dockerfile_path = os.path.join(jenkins_ci_path, 'Dockerfile')
 
     url, user, password = jenkins
 
@@ -179,6 +181,11 @@ def create_jenkins_jobs(project_name, repo=None, jenkins=None, template=None, br
 
     job_max_index = job_count - 1
     job_conifg = []
+    dockerfile = None
+
+    if dockerfile_path and os.path.exists(dockerfile_path):
+        with open(dockerfile_path, mode='r') as f:
+            dockerfile = f.read()
 
     for i in xrange(job_count):
         prefix = jobs[i]
@@ -212,7 +219,7 @@ def create_jenkins_jobs(project_name, repo=None, jenkins=None, template=None, br
         view_url = '{0}/view/{1}'.format(url, view_name)
         webbrowser.open(view_url)
 
-    return job_conifg
+    return job_conifg, dockerfile
 
 
 def delete_jenkins_jobs(project_name, group=None, jenkins=None, template=None, jobs=None,
