@@ -184,8 +184,7 @@ def create_jenkins_jobs(project_name, repo=None, jenkins=None, template=None, br
     dockerfile = None
 
     if dockerfile_path and os.path.exists(dockerfile_path):
-        with open(dockerfile_path, mode='r') as f:
-            dockerfile = f.read()
+        dockerfile = ci_env.render("Dockerfile", context)
 
     for i in xrange(job_count):
         prefix = jobs[i]
