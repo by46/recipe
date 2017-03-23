@@ -258,7 +258,10 @@ def delete_jenkins_jobs(project_name, group=None, jenkins=None, template=None, j
     client = Jenkins(url, user, password)
 
     for job in jobs:
-        job_name = '{0}_{1}'.format(job, project_slug)
+        if isinstance(job, dict):
+            job_name = '{0}_{1}'.format(job['name'], project_slug)
+        else:
+            job_name = '{0}_{1}'.format(job, project_slug)
         if client.job_exists(job_name):
             client.delete_job(job_name)
 
