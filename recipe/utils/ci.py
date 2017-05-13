@@ -216,6 +216,26 @@ def create_jenkins_jobs(project_name, repo=None, jenkins=None, template=None, br
     return job_conifg
 
 
+def create_jenkins_job(job_name, config, jenkins=None):
+    """
+
+    :param job_name:
+    :param config:
+    :param jenkins:
+    :return:
+    """
+
+    if jenkins is None:
+        jenkins = 'http://10.16.76.197:8080', 'recipe', 'recipe'
+
+    url, user, password = jenkins
+    client = Jenkins(url, user, password)
+    if client.job_exists(job_name):
+        client.delete_job(job_name)
+
+    client.create_job(job_name, config)
+
+
 def delete_jenkins_jobs(project_name, group=None, jenkins=None, template=None, jobs=None,
                         logger=None, delete_view=True):
     """
