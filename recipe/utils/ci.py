@@ -216,12 +216,13 @@ def create_jenkins_jobs(project_name, repo=None, jenkins=None, template=None, br
     return job_conifg
 
 
-def create_jenkins_job(job_name, config, jenkins=None):
+def create_jenkins_job(job_name, config, jenkins=None, run=False):
     """
 
     :param job_name:
     :param config:
     :param jenkins:
+    :param run:
     :return:
     """
 
@@ -234,6 +235,9 @@ def create_jenkins_job(job_name, config, jenkins=None):
         client.delete_job(job_name)
 
     client.create_job(job_name, config)
+
+    if run:
+        client.build_job(job_name)
 
 
 def delete_jenkins_jobs(project_name, group=None, jenkins=None, template=None, jobs=None,
