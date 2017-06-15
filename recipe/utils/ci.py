@@ -197,6 +197,9 @@ def create_jenkins_jobs(project_name, repo=None, jenkins=None, template=None, br
 
         config = env.render(template_name, context)
 
+        if client.job_exists(job_name):
+            client.delete_job(job_name)
+
         client.create_job(job_name, config)
         if render_ci:
             logger.info("Create CI %s", job_name)
