@@ -1,4 +1,5 @@
 from ci import create_jenkins_jobs
+from ci import create_jenkins_job
 from log import config_logging
 from options import OptionParser
 from path import ensure_dir

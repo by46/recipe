@@ -36,6 +36,7 @@ class ProjectCommand(Command):
                             help='Open jenkins views in default browser')
         parser.add_argument('-i', '--init-repo', dest='init_repo', action='store_true', default=False,
                             help='Init local git repository, create master, develop, feature-doc')
+        parser.add_argument('-g', '--group-name', dest='group', default=None, help='group name')
         parser.add_argument('name')
 
     def run(self):
@@ -69,7 +70,7 @@ class ProjectCommand(Command):
             if not os.path.isdir(args.out):
                 self.logger.info('Creating output dir %s', args.out)
                 os.makedirs(args.out)
-            gen_cookie_cutter_meta_json(temp_work_dir, project_slug)
+            gen_cookie_cutter_meta_json(temp_work_dir, project_slug, args.group)
 
             project_dir = cookiecutter(temp_work_dir, no_input=True, output_dir=args.out)
             if self.options.init_repo:

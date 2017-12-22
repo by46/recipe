@@ -15,9 +15,6 @@ from .exception import JenkinsViewForbiddenExceptioin
 from .project import get_templates_home
 from .project import load_project_template
 
-
-logger = logging.getLogger('recipe')
-
 NEXT_JOB_TEMPLATE = "<hudson.tasks.BuildTrigger>" \
                     "<childProjects>{0}</childProjects>" \
                     "<threshold>" \
@@ -73,6 +70,8 @@ def create_jenkins_jobs(project_name, repo=None, jenkins=None, template=None, br
                         group=None,
                         gqc_replicas=1,
                         gdev_replicas=1,
+                        render_ci=False,
+                        logger=None,
                         ** kw):
     """
 
@@ -89,6 +88,8 @@ def create_jenkins_jobs(project_name, repo=None, jenkins=None, template=None, br
     :param gqc_replicas:
     :param cloud_data_url:
     :param mail_list:
+    :param render_ci:
+    :param logger:
     :return ci jobs config:
     """
     if repo is None:
@@ -103,8 +104,11 @@ def create_jenkins_jobs(project_name, repo=None, jenkins=None, template=None, br
         gdev = 'http://scmesos02/{0}/version'.format(project_name)
     if gqc is None:
         gqc = 'http://s1qdfis02/{0}/version'.format(project_name)
+
     if group is None:
         group = 'recipe'
+    if logger is None:
+        logger = logging.getLogger('recipe')
 
     jenkins_context_path = None
     jenkins_ci_path = None
@@ -112,23 +116,29 @@ def create_jenkins_jobs(project_name, repo=None, jenkins=None, template=None, br
         templates_home = get_templates_home()
         templates = load_project_template(templates_home)
         if template in templates:
-            jenkins_context_path = os.path.join(templates[template], 'context')
-            jenkins_ci_path = os.path.join(templates[template], 'ci')
-            if not os.path.exists(jenkins_ci_path):
-                jenkins_ci_path = os.path.join(templates[template], '{{cookiecutter.project_safe_name}}', 'ci')
+            base_dir = templates[template]
+            jenkins_context_path = os.path.join(base_dir, 'context')
+            if render_ci:
+                jenkins_ci_path = os.path.join(base_dir, 'ci')
 
     url, user, password = jenkins
 
+    group_slug = group.capitalize()
     project_slug = project_name.capitalize()
+
+    view_name = project_slug
+    if render_ci:
+        view_name = group_slug
 
     logger.info('Login in %s', url)
     client = Jenkins(url, user, password)
 
     logger.debug("Loading jenkins from %s", jenkins_context_path)
-    logger.debug("Loading ci form %s", jenkins_ci_path)
-
     env = JenkinsContext(jenkins_context_path)
-    ci_env = JenkinsCI(jenkins_ci_path)
+
+    if render_ci:
+        logger.debug("Loading ci form %s", jenkins_ci_path)
+        ci_env = JenkinsCI(jenkins_ci_path)
 
     context = dict(
                    project_name=project_name,
@@ -139,6 +149,7 @@ def create_jenkins_jobs(project_name, repo=None, jenkins=None, template=None, br
                    gqc=gqc,
                    gdev=gdev,
                    group=group,
+                   group_slug=group_slug,
                    mail_trigger="FailureTrigger",
                    cloud_data=base64.b64encode(cloud_data_url).replace("=", "\="),
                    repo=repo)
@@ -155,14 +166,17 @@ def create_jenkins_jobs(project_name, repo=None, jenkins=None, template=None, br
         jobs = jenkins_jobs
 
     jenkins_jobs = reversed(env.jenkins_jobs())
+    if render_ci:
+        project_slug = "{0}_{1}".format(group_slug, project_slug)
 
     for job in jenkins_jobs:
-        job_name = '{0}_{1}'.format(job, project_slug)
+        if isinstance(job, dict):
+            job_name = '{0}_{1}'.format(job['name'], project_slug)
+        else:
+            job_name = '{0}_{1}'.format(job, project_slug)
+
         if client.job_exists(job_name):
             client.delete_job(job_name)
-
-    if client.view_exists(project_slug):
-        client.delete_view(project_slug)
 
     job_max_index = job_count - 1
     job_conifg = []
@@ -182,30 +196,64 @@ def create_jenkins_jobs(project_name, repo=None, jenkins=None, template=None, br
             context['mail_trigger'] = "AlwaysTrigger"
 
         config = env.render(template_name, context)
-        client.create_job(job_name, config)
-        logger.info("Create CI %s", job_name)
-        template_name = "{0}.sh".format(prefix.lower())
-        ci_config = ci_env.render(template_name, context)
-        job_conifg.append({prefix: ci_config})
 
-    logger.info('Create jenkins view %s', project_slug)
+        if client.job_exists(job_name):
+            client.delete_job(job_name)
+
+        client.create_job(job_name, config)
+        if render_ci:
+            logger.info("Create CI %s", job_name)
+            template_name = "{0}.sh".format(prefix.lower())
+            ci_config = ci_env.render(template_name, context)
+            job_conifg.append({prefix: ci_config})
+
+    logger.info('Create jenkins view %s', view_name)
     config = env.render('view.xml', context)
-    client.create_view(project_slug, config)
+    if not client.view_exists(view_name):
+        client.create_view(view_name, config)
 
     if browse:
-        view_url = '{0}/view/{1}'.format(url, project_slug)
+        view_url = '{0}/view/{1}'.format(url, view_name)
         webbrowser.open(view_url)
 
     return job_conifg
 
 
-def delete_jenkins_jobs(project_name, jenkins=None, template=None, jobs=None):
+def create_jenkins_job(job_name, config, jenkins=None, run=False):
+    """
+
+    :param job_name:
+    :param config:
+    :param jenkins:
+    :param run:
+    :return:
+    """
+
+    if jenkins is None:
+        jenkins = 'http://10.16.76.197:8080', 'recipe', 'recipe'
+
+    url, user, password = jenkins
+    client = Jenkins(url, user, password)
+    if client.job_exists(job_name):
+        client.delete_job(job_name)
+
+    client.create_job(job_name, config)
+
+    if run:
+        client.build_job(job_name)
+
+
+def delete_jenkins_jobs(project_name, group=None, jenkins=None, template=None, jobs=None,
+                        logger=None, delete_view=True):
     """
 
     :param project_name:
+    :param group:
     :param jenkins:
     :param template:
     :param jobs:
+    :param logger:
+    :param delete_view:
 
     :return:
     """
@@ -222,28 +270,40 @@ def delete_jenkins_jobs(project_name, jenkins=None, template=None, jobs=None):
     if jenkins is None:
         jenkins = 'http://10.16.76.197:8080', 'recipe', 'recipe'
 
+    if logger is None:
+        logger = logging.getLogger('recipe')
+
     url, user, password = jenkins
 
     project_slug = project_name.capitalize()
+    view_name = project_slug
+    if group:
+        view_name = group.capitalize()
+        project_slug = '{0}_{1}'.format(view_name, project_slug)
 
     logger.info('Login in %s', url)
     client = Jenkins(url, user, password)
 
     for job in jobs:
-        job_name = '{0}_{1}'.format(job, project_slug)
+        if isinstance(job, dict):
+            job_name = '{0}_{1}'.format(job['name'], project_slug)
+        else:
+            job_name = '{0}_{1}'.format(job, project_slug)
         if client.job_exists(job_name):
             client.delete_job(job_name)
 
-    if client.view_exists(project_slug):
-        client.delete_view(project_slug)
+    if delete_view and client.view_exists(view_name):
+        client.delete_view(view_name)
 
 
-def run_jenkins_job(project_name, job, jenkins=None):
+def run_jenkins_job(project_name, job, group=None, jenkins=None, logger=None):
     """
 
     :param project_name:
     :param job:
+    :param group:
     :param jenkins:
+    :param logger:
 
     :return:
     """
@@ -253,9 +313,14 @@ def run_jenkins_job(project_name, job, jenkins=None):
     if jenkins is None:
         jenkins = 'http://10.16.76.197:8080', 'recipe', 'recipe'
 
+    if logger is None:
+        logger = logging.getLogger('recipe')
+
     url, user, password = jenkins
 
     project_slug = project_name.capitalize()
+    if group:
+        project_slug = '{0}_{1}'.format(group.capitalize(), project_slug)
 
     logger.info('Login in %s', url)
     client = Jenkins(url, user, password)
