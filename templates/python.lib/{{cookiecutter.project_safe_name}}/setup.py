@@ -32,8 +32,8 @@ def read_dependencies(requirements=missing):
         text.close()
 
 
-def read_version(version_file):
-    with open(version_file, 'rb') as fd:
+def read_version(module_name):
+    with open(os.path.join(module_name, '__init__.py'), 'r') as fd:
         result = re.search(r'^__version__\s*=\s*[\'"]([^\'"]*)[\'"]',
                            fd.read(), re.MULTILINE)
         return result.group(1) if result else '0.0.1'
@@ -41,11 +41,11 @@ def read_version(version_file):
 
 setup(
     name='{{cookiecutter.project_slug}}',
-    version=read_version('{{cookiecutter.project_slug}}/__init__.py'),
+    version=read_version('{{cookiecutter.project_slug}}'),
     license='The MIT License',
     description='demo',
-    author='recipe',
-    author_email='recipe@newegg.com',
+    author='benjamin',
+    author_email='benjamin@newegg.com',
     install_requires=read_dependencies(),
     include_package_data=True,
     packages=find_packages(),
